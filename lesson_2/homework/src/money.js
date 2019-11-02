@@ -6,10 +6,10 @@ const sponsors = {
 };
 
 
-calcCash = (...everyCash) => {
+const calcCash = (...everyCash) => {
     const total = everyCash.reduce( (sum, current) => sum+current);
     return total;
-}
+};
 
 
 const money = calcCash(50, ...sponsors.cash);
