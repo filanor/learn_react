@@ -3,9 +3,9 @@ import './post-status-filter.css';
 
 const PostStatusFilter = () => {
     return (
-        <div classNamre = "btn-group">
-            <button/>
-            <button/>
+        <div className = "btn-group">
+            <button type = "button" className = "btn btn-info">Все</button>
+            <button type = "button" className = "btn btn-outline-secondary">Понравилось</button>
         </div>
     )
 }

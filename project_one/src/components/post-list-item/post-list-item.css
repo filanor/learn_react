@@ -45,6 +45,12 @@
   font-size: 10px;
   line-height: 42px;
 }
+.app-list-item-edit{
+  font-size: 10px;
+  line-height: 42px;
+  color: red;
+  margin-right: 10px
+}
 
 .app-list-item.like .fa-heart {
     opacity: 1;
@@ -57,4 +63,20 @@
 
 .app-list-item.important .btn-star {
     color: #aeaeae;
+}
+.post-edit-form{
+  width: 500px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  margin-top: -20px!important;
+  left: 30px;
+  content: '';
+  display: none!important;
+}
+
+.showForm .post-edit-form {display: flex!important;}
+.post-edit-form button{
+  width: 50px;
+
 }
