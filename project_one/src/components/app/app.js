@@ -14,7 +14,8 @@ const App = () => {
         {label: 'Going to learn React', important: true, id: 'qwe'},
         {label: 'That is so good', important: false, id: 'sdf'},
         {label: 'I need a break', important: false, id: 'asd'},
-        4
+        4, 
+        {}
     ];
 
     return (

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Services from '../../services/services.js'
+import Services from '../../services/services.js';
 import './post-list-item.css';
 
 

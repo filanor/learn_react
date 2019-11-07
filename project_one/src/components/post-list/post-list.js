@@ -1,12 +1,12 @@
 import React from 'react';
 import PostListItem from '../post-list-item';
-import './post-list.css'
+import './post-list.css';
 
 const PostList = ({posts}) => {
 
     const elements = posts.map((item) => {
         // Проверяем является ли элемент объектом
-        if ( typeof item === 'object'){
+        if ( typeof item === 'object' && isEmpty(item) ){
             const {id, ...itemProps} = item;
             return (
                 <li key = {id} className = 'list-group-item'>
@@ -20,6 +20,14 @@ const PostList = ({posts}) => {
             )
         }
     });
+    
+    function isEmpty(obj) {
+        for(let key in obj)
+        {
+            return true;
+        }
+        return false;
+    }
 
     return (
         <ul className = "app-list list-group">
