@@ -27,7 +27,7 @@ export default class App extends Component{
                 4, 
                 {}
             ], 
-            modal: false
+            //modal: false
         };
         this.deleteItem = this.deleteItem.bind(this);
         this.addItem = this.addItem.bind(this);
@@ -40,18 +40,18 @@ export default class App extends Component{
     }
 
     deleteItem(id) {
-        //this.setState( ({data}) => {
         this.setState( ({data}) => {
             // Нельзя менять первоначальное содержимое data, поэтому заменим первоначальный массив новым
-            //const index = data.findIndex(elem => elem.id === id);
+            const index = data.findIndex(elem => elem.id === id);
             
-            //const before = data.slice(0, index); //можно сразу поместить в newArray
-            //const newArray = [...before, ...data.slice(index+1)]; // Используя spread оператор объединим массив до index и после
+            const before = data.slice(0, index); //можно сразу поместить в newArray
+            const newArray = [...before, ...data.slice(index+1)]; // Используя spread оператор объединим массив до index и после
             return{
-                modal: true
-                //data: newArray // помещаем в data новый массив
+                //modal: true
+                data: newArray // помещаем в data новый массив
             }
         })
+        
     }
 
     addItem(body) {
@@ -85,7 +85,7 @@ export default class App extends Component{
                 <PostAddForm 
                     onAdd = {this.addItem}
                 />
-                <ConfirmModal opened = {this.state.modal} confirm = {this.confirmation}/>
+                {/*<ConfirmModal opened = {this.state.modal} confirm = {this.confirmation}/>*/}
             </AppBlock>
     
         )

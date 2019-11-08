@@ -1,7 +1,36 @@
 import React, {Component} from 'react';
+import styled from 'styled-components';
+import {Button} from 'reactstrap';
 import Services from '../../services/services.js';
 import './post-list-item.css';
 
+
+const Modal = styled.div`
+    position: absolute;
+    width: 450px;
+    height: 110px;
+    padding: 10px 20px
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+    top: 50%;
+    margin-top: -50px
+    left: 50%;
+    margin-left: -225px;
+    background-color: #ffffff;
+    z-index: 999;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    display: ${props => props.opened ? 'flex' : 'none'};
+    box-shadow: 4px 4px 17px 0px rgba(0,0,0,0.75);
+    button{
+        width: 100px!important;
+    }
+    span{
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+`
 
 export default class PostListItem extends Component{
     constructor (props) {
@@ -10,13 +39,16 @@ export default class PostListItem extends Component{
             label: this.props.label,
             important: false,
             like: false,
-            form: false
+            form: false,
+            modal: false
         }
         this.onImportant = this.onImportant.bind(this); // привяжем метод к экземпляру класса
         this.onLike = this.onLike.bind(this); 
         this.onEdit = this.onEdit.bind(this);
         this.confirmChanges = this.confirmChanges.bind(this);
         this.inputChange = this.inputChange.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     onImportant() {
@@ -47,6 +79,12 @@ export default class PostListItem extends Component{
         this.setState({label: e.target.value});
     }
 
+    openModal() {
+        this.setState({modal: true});
+    }
+    closeModal(){
+        this.setState({modal: false});
+    }
 
 
 
@@ -91,7 +129,7 @@ export default class PostListItem extends Component{
                     <button 
                         type = "button" 
                         className = "btn-trash btn-sm"
-                        onClick = {onDelete}>{/* При клике вызываем функцию, полученную из пропсов*/}
+                        onClick = {this.openModal}>{/*onDelete При клике вызываем функцию, полученную из пропсов*/}
                             <i className = "fa fa-trash-o"></i>
                     </button>
                     <i className = "fa fa-heart"></i>
@@ -111,6 +149,22 @@ export default class PostListItem extends Component{
                         className = "btn btn-outline-secondary">
                         OK</button>
                 </form>
+
+
+                {/* Модалка для подтверждения удаления */}
+                <Modal opened  = {this.state.modal}>
+                    <span>Вы точно собираетесь удалить запись?</span>
+                    <Button 
+                        color = "success"
+                        onClick = {onDelete}>
+                            Да
+                    </Button>
+                    <Button
+                        color = "secondary"
+                        onClick = {this. closeModal}>
+                            Нет
+                    </Button>
+                </Modal>
             </div>
         )
     }
