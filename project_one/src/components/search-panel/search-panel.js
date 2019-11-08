@@ -1,10 +1,16 @@
 import React from 'react';
-import './search-panel.css';
+import styled from 'styled-components';
+
+const SearchInput = styled.input`
+    width: auto;
+    flex-grow: 1;
+    margin-right: 3px;
+
+`
 
 const SearchPanel = () => {
     return (
-        <input 
-            className = "form-control search-input"
+        <SearchInput 
             type = "text"
             placeholder = "Поиск по записям"
         />

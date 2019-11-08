@@ -52,7 +52,7 @@ export default class PostListItem extends Component{
 
     render() {
         const srv = new Services();
-        //const {label} = this.props;
+        const {onDelete} = this.props;
         const {label, important, like, form} = this.state; 
         let classNames = 'app-list-item d-flex justify-content-between'; // Все классы нашего элемента записи. let, так как будет изменяться
         let editPostClass = "editPost";
@@ -88,8 +88,11 @@ export default class PostListItem extends Component{
                         onClick = {this.onImportant}>                        
                             <i className = "fa fa-star"></i>
                     </button>
-                    <button type = "button" className = "btn-trash btn-sm">
-                        <i className = "fa fa-trash-o"></i>
+                    <button 
+                        type = "button" 
+                        className = "btn-trash btn-sm"
+                        onClick = {onDelete}>{/* При клике вызываем функцию, полученную из пропсов*/}
+                            <i className = "fa fa-trash-o"></i>
                     </button>
                     <i className = "fa fa-heart"></i>
                 </div>
