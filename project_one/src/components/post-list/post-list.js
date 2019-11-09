@@ -1,16 +1,14 @@
 import React from 'react';
 import PostListItem from '../post-list-item';
 import { ListGroup, ListGroupItem } from 'reactstrap';
-import Services from '../../services/services.js';
 import './post-list.css';
 
 
-const PostList = ({posts, onDelete}) => {
+const PostList = ({posts, onEdit, onDelete, onToggleImportant, onToggleLiked}) => {
     // получаем посты и функцию onDelete
-    const srv = new Services();
     const elements = posts.map((item) => {
         // Проверяем является ли элемент объектом
-        if ( typeof item === 'object' && srv.isEmpty(item) ){
+       // if ( typeof item === 'object' && srv.isEmpty(item) ){
             const {id, ...itemProps} = item;
             return (
                 <ListGroupItem key = {id}>
@@ -22,13 +20,16 @@ const PostList = ({posts, onDelete}) => {
                     */}
                     <PostListItem 
                         {...itemProps}
-                        onDelete = {()=>onDelete(id) /** Передаем функцию onDelete с id в каждый экземпляр PostListItem */} 
+                        onDelete = { () => onDelete(id) /** Передаем функцию onDelete с id в каждый экземпляр PostListItem */} 
+                        onEdit = { () => onEdit(id)}
+                        onToggleLiked = { () => onToggleLiked(id) }
+                        onToggleImportant = { () => onToggleImportant(id) }
                     />
                     {/*onDelete={()=>console.log('Deleted')} /> Передаем функцию, в качестве пропров */}
                     
                 </ListGroupItem>
             )
-        }
+        //}
     });
     
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Services from '../../services/services'
 import './app-header.css';
 
 const Header = styled.div`
@@ -19,11 +20,12 @@ const Header = styled.div`
     }
 `
 
-const AppHeader = () => {
+const AppHeader = ({liked, allPosts}) => {
+    const srv = new Services();
     return (
         <Header colored>
             <h1>Filippov Anton</h1>
-            <h2>5 записей, из них понравилось 0</h2>
+            <h2>{allPosts} {srv.recorEnd(allPosts)}, из них понравилось {liked}</h2>
         </Header>
     )
 }
