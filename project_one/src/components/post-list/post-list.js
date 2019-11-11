@@ -7,8 +7,7 @@ import './post-list.css';
 const PostList = ({posts, onEdit, onDelete, onToggleImportant, onToggleLiked}) => {
     // получаем посты и функцию onDelete
     const elements = posts.map((item) => {
-        // Проверяем является ли элемент объектом
-       // if ( typeof item === 'object' && srv.isEmpty(item) ){
+
             const {id, ...itemProps} = item;
             return (
                 <ListGroupItem key = {id}>

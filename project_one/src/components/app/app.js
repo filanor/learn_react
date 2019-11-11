@@ -28,8 +28,7 @@ export default class App extends Component{
                 4
             ], 
             term: '', // для поиска
-            filter: 'all'
-            //modal: false
+            filter: 'all',
         };
         this.deleteItem = this.deleteItem.bind(this);
         this.addItem = this.addItem.bind(this);
