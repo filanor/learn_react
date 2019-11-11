@@ -22,9 +22,15 @@ export default class GotService {
         return this.getResource(`/characters/${id}`);
     }
     getAllBooks() {
-        return this.getResource('/books?page=5&pageSize=10');
+        return this.getResource('/books');
     }
     getBook(id) {
         return this.getResource(`/books/${id}`);
+    }
+    getAllHauses() {
+        return this.getResource('/houses');
+    }
+    getHause(id) {
+        return this.getResource(`/houses/${id}`);
     }
 }

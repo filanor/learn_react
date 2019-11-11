@@ -4,9 +4,14 @@ import bdWork from './services/bdWork';
 import ItemList from './ItemList';
 import './App.css';
 
-export default class App() extends Сomponent{
-  const bd = new bdWork();
-  const cofee = bd.getAllCofee();
+export default class App extends Сomponent{
+  constructor(props){
+    super(props);
+
+    this.bd = new bdWork();
+  }
+  
+   getAllCofee();
   
   
   return (

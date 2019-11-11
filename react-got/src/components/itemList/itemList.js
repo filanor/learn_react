@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-//import './itemList.css';
-import {ListGroup, ListGroupItem} from 'reactstrap';
+import {ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
 
 const ItemsBlock = styled.ul`
@@ -14,15 +13,15 @@ export default class ItemList extends Component {
     render() {
         return (
             <ItemsBlock className="list-group">
-                <li>
+                <ListGroupItem>
                     John Snow
-                </li>
-                <li>
+                </ListGroupItem>
+                <ListGroupItem>
                     Brandon Stark
-                </li>
-                <li>
+                </ListGroupItem>
+                <ListGroupItem>
                     Geremy
-                </li>
+                </ListGroupItem>
             </ItemsBlock>
         );
     }
