@@ -10,27 +10,64 @@ export default class GotService {
         const res = await fetch(`${this._apiBase}${url}`);
     
         if(!res.ok) {
-            throw new Error(`Could not fetch ${url}, status ${res.status}`)
+            //throw new Error({message:`Could not fetch ${url}, status ${res.status}`, status: res.status})
+            throw ( {message: `Could not fetch ${url}, status ${res.status}`, status: res.status} );
         }
         
         return await res.json();      
     };
-    getAllCharacters() {
-        return this.getResource('/characters?page=5&pageSize=10');
+    async getAllCharacters() {
+        const res = await this.getResource('/characters?page=5&pageSize=10');
+        return res.map(this._transformCharacter);
     }
-    getCharacter(id) {
-        return this.getResource(`/characters/${id}`);
+    async getCharacter(id) {
+        const character = await this.getResource(`/characters/${id}`);
+        return this._transformCharacter(character);
     }
-    getAllBooks() {
-        return this.getResource('/books');
+    async getAllBooks() {
+        const res = await this.getResource('/books');
+        return res.map(this._transformBook);
     }
-    getBook(id) {
-        return this.getResource(`/books/${id}`);
+    async getBook(id) {
+        const book = await this.getResource(`/books/${id}`);
+        return this._transformBook(book);
     }
-    getAllHauses() {
-        return this.getResource('/houses');
+    async getAllHauses() {
+        const res = await this.getResource('/houses');
+        return res.map(this._transformHouse)
     }
-    getHause(id) {
-        return this.getResource(`/houses/${id}`);
+    async getHause(id) {
+        const house = await this.getResource(`/houses/${id}`);
+        return this._transformHouse(house)
     }
+
+    _transformCharacter(char){
+        return {
+            name: char.name.length > 0 ? char.name : 'unknown',
+            gender: char.gender.length > 0 ? char.gender : 'unknown', 
+            born: char.born.length > 0 ? char.born : 'unknown', 
+            died: char.died.length > 0 ? char.died : 'unknown',
+            culture: char.culture.length > 0 ? char.culture : 'unknown'
+        }
+    } 
+
+    _transformHouse(house){
+        return {
+            name: house.name.length > 0 ? house.name : 'unknown',
+            region: house.region.length > 0 ? house.region : 'unknown', 
+            words: house.words.length > 0 ? house.words : 'unknown', 
+            title: house.title.length > 0 ? house.title : 'unknown',
+            overlord: house.overlord.length > 0 ? house.overlord : 'unknown',
+            ancestraWeapons: house.ancestraWeapons.length > 0 ? house.ancestraWeapons : 'unknown'
+        }
+    } 
+
+    _transformBook(book){
+        return {
+            name: book.name.length > 0 ? book.name : 'unknown',
+            numberOfPages: book.numberOfPages.length > 0 ? book.numberOfPages : 'unknown', 
+            publiser: book.publiser.length > 0 ? book.publiser : 'unknown', 
+            released: book.released.length > 0 ? book.released : 'unknown',
+        }
+    } 
 }
