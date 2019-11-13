@@ -18,6 +18,7 @@ export default class GotService {
     };
     async getAllCharacters() {
         const res = await this.getResource('/characters?page=5&pageSize=10');
+        //const res = await this.getResource('/chaters?page=5&pageSize=10'); // для ошибки
         return res.map(this._transformCharacter);
     }
     async getCharacter(id) {
@@ -47,7 +48,8 @@ export default class GotService {
             gender: char.gender.length > 0 ? char.gender : 'unknown', 
             born: char.born.length > 0 ? char.born : 'unknown', 
             died: char.died.length > 0 ? char.died : 'unknown',
-            culture: char.culture.length > 0 ? char.culture : 'unknown'
+            culture: char.culture.length > 0 ? char.culture : 'unknown',
+            id: `c_${char.url.slice(char.url.lastIndexOf('/')+1)}`
         }
     } 
 
@@ -58,7 +60,8 @@ export default class GotService {
             words: house.words.length > 0 ? house.words : 'unknown', 
             title: house.title.length > 0 ? house.title : 'unknown',
             overlord: house.overlord.length > 0 ? house.overlord : 'unknown',
-            ancestraWeapons: house.ancestraWeapons.length > 0 ? house.ancestraWeapons : 'unknown'
+            ancestraWeapons: house.ancestraWeapons.length > 0 ? house.ancestraWeapons : 'unknown',
+            id: `h_${house.url.slice(house.url.lastIndexOf('/')+1)}`
         }
     } 
 
@@ -68,6 +71,7 @@ export default class GotService {
             numberOfPages: book.numberOfPages.length > 0 ? book.numberOfPages : 'unknown', 
             publiser: book.publiser.length > 0 ? book.publiser : 'unknown', 
             released: book.released.length > 0 ? book.released : 'unknown',
+            id: `b_${book.url.slice(book.url.lastIndexOf('/')+1)}`
         }
     } 
 }

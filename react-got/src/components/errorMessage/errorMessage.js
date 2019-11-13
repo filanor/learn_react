@@ -5,34 +5,11 @@ const ErrPic = styled.img`
     max-width: 100%;
 `;
 
-// export default class ErrorBoundary extends Component{
-//     constructor(props){
-//         super(props);
-//         this.state = {
-//             error: false,
-//         }
-//     }
-//     static getDerivedStateFromError(error) {
-//         return {error: true}
-//     }
-    
-    
-//     render() {
-//         if (this.state.error) {
-//             return(  
-//                 <div>
-//                     { <ErrPic src = {process.env.PUBLIC_URL + 'img/error.jpg'} alt = 'error'></ErrPic> }
 
-//                     <span>Somethin goes wrong</span>
-//                 </div>          
-//             );
-//         }
-//         return this.props.children;
-//     }
-// }
 
-const ErrorMessage = ({status}) => {
+const ErrorMessage = ({status = 0}) => {
     const errDictionary = {
+                0: {msg: "Sorry, i'm tired", pic: 'img/error.jpg'},
                 404: {msg:'Somethin goes wrong', pic: 'img/error.jpg'}, 
                 410: {msg: 'we are broken', pic: 'img/ruins.jpg'},
                 408: {msg: 'we waiting too long..', pic:'img/time.jpg'}

@@ -4,19 +4,30 @@ import Header from '../header';
 import RandomChar from '../randomChar';
 import ItemList from '../itemList';
 import CharDetails from '../charDetails';
+import ErrorMessage from '../errorMessage'
+import CharacterPage from '../characterPage';
 
 
 
 export default class App extends Component{
     state = {
-        randomChar: true
+        randomChar: true,
+        error: false
     }
+
+    componentDidCatch(){
+        // Отлавливаем ошибки. не обрабатывает ошибки в ассинхронных и собственных методах
+        console.log('error');
+        this.setState({
+            error: true
+        })
+    }
+
 
     toggleRandomChar = () => {
         this.setState({
             randomChar: !this.state.randomChar
         });
-        console.log(this.state.randomChar)
     }
     showRandomChar = () => {
         return(
@@ -27,8 +38,16 @@ export default class App extends Component{
             </Row> 
         )
     }
+
+
+
     render() {
         const randomChar = this.state.randomChar ? this.showRandomChar() : null;
+
+        if(this.state.error){
+            return <ErrorMessage/>
+        }
+
         return (
             <> 
                 <Container>
@@ -37,15 +56,17 @@ export default class App extends Component{
                 <Container>
                     
                     {randomChar}
-                    <Row>
-                        <Col md='6'>
-                            <ItemList />
-                        </Col>
-                        <Col md='6'>
-                            <CharDetails />
-                        </Col>
-                    </Row>
                     <Button onClick = {this.toggleRandomChar}>Toggle Random Character</Button>
+                    {/* <Row>
+                        <Col md='6'>
+                            <ItemList onCharSelected = {this.onCharSelected}/>
+                        </Col>
+                        <Col md='6'>
+                            <CharDetails charId = {this.state.selectedChar}/>
+                        </Col>
+                    </Row> */}
+                    <CharacterPage/>
+                   
                 </Container>
             </>
         );

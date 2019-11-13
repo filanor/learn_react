@@ -22,10 +22,14 @@ const RandomBlock = styled.div`
 `
 
 export default class RandomChar extends Component {
-    constructor(){
-        super();
-        this.updateChar();
-    }
+    // constructor(){
+    //     super();
+    //     this.updateChar();
+    //     this.temerId = setInterval(this.updateChar, 1500) // обновление рандомного персонажа каждые 1.5 секунды (так как здесь используем контекст
+    //     // вызова, необходимо updateChar сделать стрелочной)
+        
+    //     console.log('constructor')
+    // }
 
     state = {
         char: {},
@@ -36,6 +40,15 @@ export default class RandomChar extends Component {
 
     gotService = new GotService();
 
+    componentDidMount() {
+        this.updateChar();
+        this.temerId = setInterval(this.updateChar, 1500) 
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerId); 
+    }
+
     onCharLoaded = (char) => {
         this.setState({
             char,
@@ -45,7 +58,6 @@ export default class RandomChar extends Component {
     }
 
     onError = (status) => {
-        console.log(status);
         this.setState({
             error: true,
             errorStatus: status,
@@ -53,9 +65,9 @@ export default class RandomChar extends Component {
         })
     }
 
-    updateChar() {
-       // const id = Math.floor(Math.random() * 140 + 25); // рандомный id персонажа ()
-       const id = 12342341234;
+    updateChar = () => {
+        const id = Math.floor(Math.random() * 140 + 25); // рандомный id персонажа ()
+       //const id = 12342341234;
         this.gotService.getCharacter(id) // возвращает промис
             .then( this.onCharLoaded)
             .catch((error) => {
@@ -63,6 +75,7 @@ export default class RandomChar extends Component {
     }
 
     render() {
+        console.log('render');
         const {char, loading, error, errorStatus} = this.state;
         
         const errorMessage = error ? <ErrorMessage status = {errorStatus}/> : null;
