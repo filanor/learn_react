@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import GotService from '../../services/gotService';
 import Spinner from '../spinner';
-import {ListGroup, ListGroupItem} from 'reactstrap';
+import {Button, ListGroup, ListGroupItem, Col, Row} from 'reactstrap';
 import styled from 'styled-components';
 import ErrorMessage from '../errorMessage';
 
@@ -35,14 +35,15 @@ export default class RandomChar extends Component {
         char: {},
         loading: true,
         error: false,
-        errorStatus: ''
+        errorStatus: '',
+        visible: true
     }
 
     gotService = new GotService();
 
     componentDidMount() {
         this.updateChar();
-        this.temerId = setInterval(this.updateChar, 1500) 
+        this.temerId = setInterval(this.updateChar, 5000) 
     }
 
     componentWillUnmount() {
@@ -66,17 +67,36 @@ export default class RandomChar extends Component {
     }
 
     updateChar = () => {
-        const id = Math.floor(Math.random() * 140 + 25); // рандомный id персонажа ()
-       //const id = 12342341234;
+        const id = 'c_' + Math.floor(Math.random() * 140 + 25); // рандомный id персонажа ()
         this.gotService.getCharacter(id) // возвращает промис
-            .then( this.onCharLoaded)
+            .then( this.onCharLoaded )
             .catch((error) => {
                 this.onError(error.status);});
     }
 
+
+    toggleRandomChar = () => {
+        this.setState({
+            visible: !this.state.visible
+        });
+    }
+    showRandomChar = () => {
+        return(
+            <Row>
+                <Col lg={{size: 5, offset: 0}}>
+                    <RandomChar/>
+                </Col>
+            </Row> 
+        )
+    }
+
     render() {
-        console.log('render');
-        const {char, loading, error, errorStatus} = this.state;
+        
+        const {char, loading, error, errorStatus, visible} = this.state;
+
+        if(!visible){
+            return <Button onClick = {this.toggleRandomChar}>Toggle Random Character</Button>
+        }
         
         const errorMessage = error ? <ErrorMessage status = {errorStatus}/> : null;
          // Если статуc loadin, то в переменной spinner будет загрузочный блок, иначе 0
@@ -84,24 +104,31 @@ export default class RandomChar extends Component {
 
         const content = !(loading || errorMessage) ? <View char = {char}/> : null;       
         
-        
 
         return (
-            <RandomBlock>
-                {errorMessage}
-                {spinner}
-                {content}
-            </RandomBlock>
+            <Fragment>
+                <Button onClick = {this.toggleRandomChar}>Toggle Random Character</Button>
+                <Row>
+                <Col lg={{size: 5, offset: 0}}>
+                <RandomBlock>
+                    {errorMessage}
+                    {spinner}
+                    {content}
+                </RandomBlock>
+               
+                </Col>
+            </Row> 
+            </Fragment>
         );
     }
 }
 
 const View = ({char}) => {
+    
     const {name, gender, born, died, culture} = char;
     return (
         <Fragment>
-            
-             <h4>Random Character: {name}</h4>
+                <h4>Random Character: {name}</h4>
                 <ListGroup flush>
                     <ListGroupItem>
                         <span className="term">Gender</span>
@@ -120,7 +147,6 @@ const View = ({char}) => {
                         <span>{culture}</span>
                     </ListGroupItem>
                 </ListGroup>
-
             
         </Fragment>
     );

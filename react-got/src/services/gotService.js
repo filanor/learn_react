@@ -6,7 +6,7 @@ export default class GotService {
         this._apiBase = 'https://www.anapioficeandfire.com/api';
     }
 
-    async getResource(url){
+    getResource = async (url) => {
         const res = await fetch(`${this._apiBase}${url}`);
     
         if(!res.ok) {
@@ -16,29 +16,32 @@ export default class GotService {
         
         return await res.json();      
     };
-    async getAllCharacters() {
+    getAllCharacters = async () => {
         const res = await this.getResource('/characters?page=5&pageSize=10');
         //const res = await this.getResource('/chaters?page=5&pageSize=10'); // для ошибки
         return res.map(this._transformCharacter);
     }
-    async getCharacter(id) {
-        const character = await this.getResource(`/characters/${id}`);
+    getCharacter = async (id) => {
+        const numberId = typeof id === 'number' ? id : id.slice(2);
+        const character = await this.getResource(`/characters/${numberId}`);
         return this._transformCharacter(character);
     }
-    async getAllBooks() {
+    getAllBooks = async () => {
         const res = await this.getResource('/books');
         return res.map(this._transformBook);
     }
-    async getBook(id) {
-        const book = await this.getResource(`/books/${id}`);
+    getBook = async (id) => {
+        const numberId = typeof id === 'number' ? id : id.slice(2);
+        const book = await this.getResource(`/books/${numberId}`);
         return this._transformBook(book);
     }
-    async getAllHauses() {
-        const res = await this.getResource('/houses');
+    getAllHouses = async () => {
+        const res = await this.getResource('/houses/');
         return res.map(this._transformHouse)
     }
-    async getHause(id) {
-        const house = await this.getResource(`/houses/${id}`);
+    getHouse = async (id) => {
+        const numberId = typeof id === 'number' ? id : id.slice(2);
+        const house = await this.getResource(`/houses/${numberId}`);
         return this._transformHouse(house)
     }
 
@@ -58,9 +61,8 @@ export default class GotService {
             name: house.name.length > 0 ? house.name : 'unknown',
             region: house.region.length > 0 ? house.region : 'unknown', 
             words: house.words.length > 0 ? house.words : 'unknown', 
-            title: house.title.length > 0 ? house.title : 'unknown',
             overlord: house.overlord.length > 0 ? house.overlord : 'unknown',
-            ancestraWeapons: house.ancestraWeapons.length > 0 ? house.ancestraWeapons : 'unknown',
+            ancestraWeapons: house.ancestralWeapons.length > 0 ? house.ancestralWeapons : 'unknown',
             id: `h_${house.url.slice(house.url.lastIndexOf('/')+1)}`
         }
     } 
@@ -69,7 +71,7 @@ export default class GotService {
         return {
             name: book.name.length > 0 ? book.name : 'unknown',
             numberOfPages: book.numberOfPages.length > 0 ? book.numberOfPages : 'unknown', 
-            publiser: book.publiser.length > 0 ? book.publiser : 'unknown', 
+            publisher: book.publisher.length > 0 ? book.publisher : 'unknown', 
             released: book.released.length > 0 ? book.released : 'unknown',
             id: `b_${book.url.slice(book.url.lastIndexOf('/')+1)}`
         }
