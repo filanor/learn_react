@@ -4,7 +4,7 @@ import Header from '../header';
 import ErrorMessage from '../errorMessage';
 import {CharacterPage, BooksPage, HousePage, BookItem, BadPage, IndexPage} from '../Pages';
 import GotService from '../../services/gotService';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import './app.css';
 
 
@@ -37,21 +37,23 @@ export default class App extends Component{
                         <Header />
                     </Container>
                     <Container>
-                        
-                        <Route exact path = '/' component = {IndexPage}/>
-                        <Route path = '/characters' component = {CharacterPage}/>
-                        <Route path = '/houses' component = {HousePage}/>
-                        <Route path = '/books' exact component = {BooksPage}/>
-                        <Route path = '/books/:id' render = {
-                            ({match}) => {
-                                const {id} = match.params;
-                                return <BookItem bookId = {+id}/>
-                            }
-                        }/>
-                        <Route component = {BadPage}/>
-                        {/* <CharacterPage/>
-                        <BookPage/>
-                        <HousePage/> */}
+                        <Switch>
+                            <Route exact path = '/' component = {IndexPage}/>
+                            <Route path = '/characters/' component = {CharacterPage}/>
+                            <Route path = '/houses/' component = {HousePage}/>
+                            <Route path = '/books/' exact component = {BooksPage}/>
+                            <Route path = '/books/:id' render = {
+                                ({match}) => {
+                                    const {id} = match.params;
+                                    return <BookItem bookId = {+id}/>
+                                }
+                            }/>
+
+                            <Route path = "*"><BadPage/></Route> 
+                            {/* <CharacterPage/>
+                            <BookPage/>
+                            <HousePage/> */}
+                        </Switch>
                     </Container>
                 </div>
             </Router>
