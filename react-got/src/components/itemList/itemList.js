@@ -3,6 +3,7 @@ import Spinner from '../spinner/';
 import ErrorMessage from '../errorMessage';
 import {ListGroupItem} from 'reactstrap';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const ItemsBlock = styled.ul`
     li{
@@ -81,4 +82,15 @@ export default class ItemList extends Component {
             </ItemsBlock>
         );
     }
+}
+
+// Пропсы по умолчанию
+ItemList.defaultProps = {
+    onItemSelected: () => {}
+}
+
+// Проверка типов пропсов
+ItemList.propTypes = {
+    onItemSelected: PropTypes.func,
+    //getData: PropTypes.arrayOf(PropTypes.object) Проверяем что getData является массивом объектов (показано для примера)
 }

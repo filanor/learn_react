@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import GotService from '../../services/gotService';
-import Spinner from '../spinner';
+//import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
 import styled from 'styled-components';
 import {ListGroup, ListGroupItem} from 'reactstrap'
 
 
 const  ItemDetail = styled.div`
-    background-color: #fff;
     padding: 25px 25px 15px 25px;
     margin-bottom: 40px;
     h4{
@@ -16,11 +15,16 @@ const  ItemDetail = styled.div`
     }
     li{
         display: flex;
+        background: transparent;
     }
 `;
 const SelectError = styled.span`
-color: #ffffff
+    color: #000
+    display: block;
+    margin: auto
 `;
+
+
 
 
 const Field = ({item, field, label}) => {

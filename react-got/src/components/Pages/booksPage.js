@@ -7,10 +7,52 @@ import React, {Component} from 'react';
 import GotService from '../../services/gotService';
 import ErrorMessage from '../errorMessage';
 import ItemList from '../itemList';
-import ItemDetails, {Field} from '../itemDetails';
-import RowBlock from '../rowBlock';
+import {withRouter} from 'react-router-dom';
 
-export default class BookPage extends Component{
+class BooksPage extends Component{
+    gotService = new GotService();
+    state = {
+        error: false
+    }
+
+    componentDidCatch() {
+        this.setState({
+            error: true
+        })
+    }
+
+    render(){
+        const {error} = this.state;
+        if(error){
+            return <ErrorMessage/>;
+        }
+        
+        return (
+            <ItemList
+                getData = {this.gotService.getAllBooks}
+                renderItem = { (item) => item.name }
+                onItemSelected = {(itemId)=>{
+                    const id = this.gotService._transformId(itemId);
+                    this.props.history.push(id);
+                }}
+                />
+        );
+    }
+}
+
+
+export default withRouter(BooksPage)
+
+
+
+
+/**
+ * 
+ *  Старая версия бер Роутера и с выводом списка и инфы о книге на 1 странице
+ * 
+ * 
+ * 
+ * export default class BookPage extends Component{
 
     gotService = new GotService();
     state = {
@@ -37,6 +79,16 @@ export default class BookPage extends Component{
             return <ErrorMessage/>;
         }
         
+        return (
+            <ItemList
+                getData = {this.gotService.getAllBooks}
+                renderItem = { (item) => item.name }
+                onItemSelected ={this.onBookSelected}
+                />
+        );
+
+
+        
         const bookList = <ItemList
                             getData = {this.gotService.getAllBooks}
                             renderItem = { (item) => item.name }
@@ -58,3 +110,5 @@ export default class BookPage extends Component{
         );
     }
 }
+ * 
+ */

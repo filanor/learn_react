@@ -4,12 +4,14 @@ import Spinner from '../spinner';
 import {Button, ListGroup, ListGroupItem, Col, Row} from 'reactstrap';
 import styled from 'styled-components';
 import ErrorMessage from '../errorMessage';
+import PropTypes from 'prop-types';
 
 const RandomBlock = styled.div`
     background-color: #fff;
     padding: 25px 25px 15px 25px; 
     margin-bottom: 40px;
     border-radius: 0.25rem !important;
+    color: #000000;
     h4{
         margin-bottom: 20px;
         text-align: center;
@@ -39,11 +41,15 @@ export default class RandomChar extends Component {
         visible: true
     }
 
+    static defaultProps = {
+        updInterval: 10000,
+    }
+
     gotService = new GotService();
 
     componentDidMount() {
         this.updateChar();
-        this.temerId = setInterval(this.updateChar, 5000) 
+        this.temerId = setInterval(this.updateChar, this.props.updInterval) 
     }
 
     componentWillUnmount() {
@@ -91,7 +97,7 @@ export default class RandomChar extends Component {
     }
 
     render() {
-        
+        console.log(this.state.char);
         const {char, loading, error, errorStatus, visible} = this.state;
 
         if(!visible){
@@ -122,6 +128,18 @@ export default class RandomChar extends Component {
         );
     }
 }
+
+// Устанавливаем props по умолчанию для интервала обновления. Теперь мы можем передать его из другого компонента, либо будет
+// использоваться этот: 
+//RandomChar.defaultProps = {
+//   interval: 10000,
+//}
+
+// Проверка типа с использованием библиотеки prop-types (без нее в lesson11/lsn11_theory)
+RandomChar.propTypes = {
+    interval: PropTypes.number
+}
+
 
 const View = ({char}) => {
     

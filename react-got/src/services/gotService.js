@@ -22,8 +22,7 @@ export default class GotService {
         return res.map(this._transformCharacter);
     }
     getCharacter = async (id) => {
-        const numberId = typeof id === 'number' ? id : id.slice(2);
-        const character = await this.getResource(`/characters/${numberId}`);
+        const character = await this.getResource(`/characters/${ this._transformId(id) }`);
         return this._transformCharacter(character);
     }
     getAllBooks = async () => {
@@ -31,8 +30,7 @@ export default class GotService {
         return res.map(this._transformBook);
     }
     getBook = async (id) => {
-        const numberId = typeof id === 'number' ? id : id.slice(2);
-        const book = await this.getResource(`/books/${numberId}`);
+        const book = await this.getResource(`/books/${ this._transformId(id) }`);
         return this._transformBook(book);
     }
     getAllHouses = async () => {
@@ -40,8 +38,7 @@ export default class GotService {
         return res.map(this._transformHouse)
     }
     getHouse = async (id) => {
-        const numberId = typeof id === 'number' ? id : id.slice(2);
-        const house = await this.getResource(`/houses/${numberId}`);
+        const house = await this.getResource(`/houses/${ this._transformId(id) }`);
         return this._transformHouse(house)
     }
 
@@ -70,10 +67,13 @@ export default class GotService {
     _transformBook(book){
         return {
             name: book.name.length > 0 ? book.name : 'unknown',
-            numberOfPages: book.numberOfPages.length > 0 ? book.numberOfPages : 'unknown', 
+            numberOfPages: book.numberOfPages > 0 ? book.numberOfPages : 'unknown', 
             publisher: book.publisher.length > 0 ? book.publisher : 'unknown', 
             released: book.released.length > 0 ? book.released : 'unknown',
             id: `b_${book.url.slice(book.url.lastIndexOf('/')+1)}`
         }
-    } 
+    }
+    _transformId(id){
+        return typeof id === 'number' || !isNaN(+id) ? id : id.slice(2);
+    }
 }

@@ -4,7 +4,13 @@ import ErrorMessage from '../errorMessage';
 import RowBlock from '../rowBlock';
 import ItemList from '../itemList';
 import ItemDetails, {Field} from '../itemDetails';
+import styled from 'styled-components';
 
+const House = styled.div`
+    margin: 0px auto;
+    background-color: #ffffff;
+    height: 240px
+`;
 
 
 export default class HousePage extends Component{
@@ -34,7 +40,8 @@ export default class HousePage extends Component{
                             getData = {this.gotService.getAllHouses}
                             renderItem = {(item) => item.name}
                         />
-        const housesDetails = <ItemDetails
+        const housesDetails =<House>
+                                <ItemDetails
                                     getData = {this.gotService.getHouse}
                                     itemId = {selectedHouse}
                                     itemType = 'house'>
@@ -43,6 +50,7 @@ export default class HousePage extends Component{
                                         <Field field = 'words' label = 'Words'/>
                                         
                                 </ItemDetails>
+                            </House>
         return (
             <RowBlock left = {housesList} right = {housesDetails}/>
         )

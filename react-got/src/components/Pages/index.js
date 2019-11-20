@@ -1,8 +1,15 @@
 import CharacterPage from './characterPage';
-import BookPage from './bookPage';
+import BooksPage from './booksPage';
 import HousePage from './housePage';
+import BookItem from './bookItem';
+import BadPage from './404';
+import IndexPage from './indexPage';
+
 export  {
     CharacterPage,
-    BookPage,
-    HousePage
+    HousePage,
+    BooksPage,
+    BookItem,
+    BadPage,
+    IndexPage
 }

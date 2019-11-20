@@ -4,7 +4,13 @@ import ItemDetails, {Field} from '../itemDetails';
 import GotService from '../../services/gotService';
 import ErrorMessage from '../errorMessage'
 import RowBlock from '../rowBlock';
+import styled from 'styled-components';
 
+const Char = styled.div`
+    margin: 0px auto;
+    background-color: #ffffff;);
+    height: 240px
+`;
 
 
 
@@ -36,16 +42,18 @@ export default class CharacterPage extends Component{
                             onItemSelected = {this.onCharacterSelected}
                             getData = {this.gotService.getAllCharacters } 
                             renderItem = {(item) => item.name} />;
-        const charDetails = <ItemDetails 
-                                itemId = {this.state.selectedChar}
-                                getData = {this.gotService.getCharacter}
-                                itemType = 'character'>
-                                    <Field field = 'gender' label = 'Gender'/>
-                                    <Field field = 'born' label = 'Born'/>
-                                    <Field field = 'died' label = 'Died'/>
-                                    <Field field = 'culture' label = 'Culture'/>
+        const charDetails = <Char>
+                                <ItemDetails 
+                                    itemId = {this.state.selectedChar}
+                                    getData = {this.gotService.getCharacter}
+                                    itemType = 'character'>
+                                        <Field field = 'gender' label = 'Gender'/>
+                                        <Field field = 'born' label = 'Born'/>
+                                        <Field field = 'died' label = 'Died'/>
+                                        <Field field = 'culture' label = 'Culture'/>
+                                </ItemDetails>
+                            </Char>   ;
 
-                            </ItemDetails>;
         return(
             <RowBlock left = {itemList} right = {charDetails}/>
             /* Старый вариант. Rомпоненты (ItemList и CharDetail)вынесли в отдельные переменные (выше), 
