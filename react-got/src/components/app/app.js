@@ -48,7 +48,7 @@ export default class App extends Component{
                                 return <BookItem bookId = {+id}/>
                             }
                         }/>
-                        {/* <Route component = {BadPage}/> */}
+                        <Route component = {BadPage}/>
                         {/* <CharacterPage/>
                         <BookPage/>
                         <HousePage/> */}
