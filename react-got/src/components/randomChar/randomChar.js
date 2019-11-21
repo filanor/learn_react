@@ -1,7 +1,7 @@
 import React, {useState, useEffect, Fragment} from 'react';
 import GotService from '../../services/gotService';
 import Spinner from '../spinner';
-import {Button, ListGroup, ListGroupItem, Col, Row} from 'reactstrap';
+import {ListGroup, ListGroupItem, Col, Row} from 'reactstrap';
 import styled from 'styled-components';
 import ErrorMessage from '../errorMessage';
 
@@ -22,23 +22,25 @@ const RandomBlock = styled.div`
 
 `
 
+
 function RandomChar({interval = 1000}){
 
     const [char, updateChar] = useState({});
     const [error, onError] = useState(false);
     const [loading, updateLoading] = useState(true);
     const [errorStatus, onErrorStatus] = useState('');
-    const [visible, updateVisible] = useState(true);
+    //const [visible, updateVisible] = useState(true);
 
     const gotService = new GotService();
 
     useEffect( () => {
         let timerId = setInterval(getChar, interval);
         return () => { clearInterval(timerId);};
-    }, [visible]);
+    }, []);
 
 
     function getChar() {
+        console.log('фыва');
         const id = 'c_' + Math.floor(Math.random() * 140 + 25); 
         gotService.getCharacter(id) 
             .then( data => {
@@ -54,14 +56,14 @@ function RandomChar({interval = 1000}){
     }
 
 
-    function toggleRandomChar() {
-        updateVisible(!visible);
-        console.log('убрали кнопку');
-    }
+    // function toggleRandomChar() {
+    //     updateVisible(!visible);
+    //     console.log('убрали кнопку');
+    // }
 
-    if(!visible){
-        return <Button onClick = {toggleRandomChar}>Toggle Random Character</Button>;
-    }
+    // if(!visible){
+    //     return <Button onClick = {toggleRandomChar}>Toggle Random Character</Button>;
+    // }
         
     const errorMessage = error ? <ErrorMessage status = {errorStatus}/> : null;
     const spinner = loading ? <Spinner/> : null;
@@ -70,7 +72,7 @@ function RandomChar({interval = 1000}){
 
     return (
         <Fragment>
-            <Button onClick = {toggleRandomChar}>Toggle Random Character</Button>
+            {/* <Button onClick = {toggleRandomChar}>Toggle Random Character</Button> */}
             <Row>
                 <Col lg={{size: 5, offset: 0}}>
                 <RandomBlock>
