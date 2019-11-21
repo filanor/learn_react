@@ -23,7 +23,8 @@ export default class CharacterPage extends Component{
     onCharacterSelected = (id) => {
         this.setState({
             selectedChar: id
-        })
+        });
+        console.log(`кликнули на ${id}, теперь state ${this.state.selectedChar}`);
     }
 
     componentDidCatch(){

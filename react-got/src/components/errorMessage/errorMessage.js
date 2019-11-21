@@ -9,13 +9,14 @@ const ErrPic = styled.img`
 
 const ErrorMessage = ({status = 0}) => {
     const errDictionary = {
-                0: {msg: "Sorry, i'm tired", pic: 'img/error.jpg'},
-                404: {msg:'Somethin goes wrong', pic: 'img/error.jpg'}, 
-                410: {msg: 'we are broken', pic: 'img/ruins.jpg'},
-                408: {msg: 'we waiting too long..', pic:'img/time.jpg'}
+                0: {msg: "Sorry, i'm tired", pic: '/img/error.jpg'},
+                404: {msg:'Somethin goes wrong', pic: '/img/error.jpg'}, 
+                410: {msg: 'we are broken', pic: '/img/ruins.jpg'},
+                408: {msg: 'we waiting too long..', pic:'/img/time.jpg'}
             };
 
     const {msg, pic} = errDictionary[status];
+    console.log(status);
     return(
         <Fragment>
             {/** Допустим нам необходимо подгрузить файл, находящийся в папке pulic. Для этого используется следующая конструкци: */}

@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
-import GotService from '../../services/gotService';
-//import Spinner from '../spinner';
+import React, {useState, useEffect} from 'react';
+//import GotService from '../../services/gotService';
 import ErrorMessage from '../errorMessage';
 import styled from 'styled-components';
 import {ListGroup, ListGroupItem} from 'reactstrap'
@@ -19,7 +18,7 @@ const  ItemDetail = styled.div`
     }
 `;
 const SelectError = styled.span`
-    color: #000
+    color: #000;
     display: block;
     margin: auto
 `;
@@ -41,105 +40,50 @@ export {
 }
 
 
-export default class ItemDetails extends Component {
-    gotService = new GotService();
-    state = {
-        item: this.props.itemId,
-        loading: true,
-        error: false,
-    }
+function ItemDetails({itemId, getData, itemType, children}) {
+    
+    const [item, updateItem] = useState(itemId);
+    const [error, onError] = useState(false);
 
-    componentDidMount() {
-        this.updateItem();
-    }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.itemId !== prevProps.itemId) {
-            this.updateItem(); // Всегда стоить делать проверку новых и прошлых пропсов иначе получится бесконечный цикл
-        }
-    }
-
-    onItemDetailsLoaded = (item) => {
-        this.setState({
-            item,
-            loading: false
-        })
-    }
-
-    componentDidCatch(){
-        this.setState({
-            item: null,
-            error: true
-        })
-    }
-
-    updateItem() {
-        const {getData, itemId} = this.props;
+    useEffect( () => {
         if(!itemId) {
             return
         }
         getData(itemId)
-        //this.gotService.getCharacter(charId)
-            .then( this.onItemDetailsLoaded )
-            .catch( error => {this.onError(error.status);})
-        //this.foo.bar = 0;
-    }
+            .then( (item) => {
+                updateItem(item);
+                
+            } )
+            .catch( error => {
+                onError(error.status);
+                
+            })
+    }, [itemId]);
+ 
 
-    onError(status){
-        this.setState({
-            item: null,
-            error: status
-        })
-    }
-
-    render() {
-        const {item, error, loading} = this.state;
-        const {itemType} = this.props;
         if(error){
             return <ErrorMessage status = {error}/>
         }
+
         if(!item) {
             return <SelectError>Please select a {itemType}</SelectError>
         }
-        //const spinner = loading ? <Spinner/> : null;
         const {name} = item;
 
         return (
             <ItemDetail className="rounded">
                 <h4>{name}</h4>
                 <ListGroup flush>
-                    {   /**   Перебираем всех детей с помощью втроенной функции map (Дети в данном слючае это Field, 
-                     * которые мы передали из characterPage). При переборе  мы берем каждого child и добавляем к нему элемент из 
-                     * state. */
-                        React.Children.map(this.props.children, (child) => {   
+                    {   
+                        React.Children.map(children, (child) => {   
                             return React.cloneElement(child, {item})
                         })
-                        //this.props.children
                     } 
-                   {/* 
-                    this.props.children в компоненты в качестве пропсов можно ередавать другие компоненты
-
-
-                    Старый вариант. заменен на вариант с React.children 
-                   <ListGroupItem className="justify-content-between">
-                        <span className="term">Gender</span>
-                        <span>{gender}</span>
-                    </ListGroupItem>
-                    <ListGroupItem className="justify-content-between">
-                        <span className="term">Born</span>
-                        <span>{born}</span>
-                    </ListGroupItem>
-                    <ListGroupItem className="justify-content-between">
-                        <span className="term">Died</span>
-                        <span>{died}</span>
-                    </ListGroupItem>
-                    <ListGroupItem className="justify-content-between">
-                        <span className="term">Culture</span>
-                        <span>{culture}</span>
-                    </ListGroupItem>
-                    */}
+                 
                 </ListGroup>
             </ItemDetail>
         );
     }
-}
+
+export default ItemDetails;

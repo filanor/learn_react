@@ -4,10 +4,13 @@
 	padding: 0;
     outline: none;
 }
+.body, #root{
+    height: 1hv;	
+}
 .app {
     overflow-x: hidden;
     background: url('got.jpeg') center center no-repeat;
     background-size: cover;
     font-size: 16px;
-    height: 100%;	
+    height: 100vh;	
 }
