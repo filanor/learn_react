@@ -29,30 +29,31 @@ function RandomChar({interval = 1000}){
     const [error, onError] = useState(false);
     const [loading, updateLoading] = useState(true);
     const [errorStatus, onErrorStatus] = useState('');
-    //const [visible, updateVisible] = useState(true);
+    const [isCancel, updateIsCancel] = useState(false);
 
     const gotService = new GotService();
 
     useEffect( () => {
         let timerId = setInterval(getChar, interval);
-        return () => { clearInterval(timerId);};
+        return () => { clearInterval(timerId); updateIsCancel(true);};
     }, []);
 
 
     function getChar() {
-        console.log('фыва');
         const id = 'c_' + Math.floor(Math.random() * 140 + 25); 
-        gotService.getCharacter(id) 
-            .then( data => {
-                updateLoading(false);
-                updateChar(data);
-                onErrorStatus('');
-                
-            } )
-            .catch((error) => {
-                onError(true);
-                onErrorStatus(error.status);
-            });
+        if(!isCancel){
+            gotService.getCharacter(id) 
+                .then( data => {
+                    updateLoading(false);
+                    updateChar(data);
+                    onErrorStatus('');
+                    
+                } )
+                .catch((error) => {
+                    onError(true);
+                    onErrorStatus(error.status);
+                });
+        }
     }
 
 
