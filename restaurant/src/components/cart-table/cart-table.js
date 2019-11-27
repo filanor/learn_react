@@ -17,7 +17,7 @@ const CartTable = ({items, deleteFromCart, RestoService}) => {
             {
                 items.map( item => {
                     const {price, title, url, id, qtty} = item;
-                    console.log(qtty);
+                    // console.log(qtty);
                     return (
                         <div key = {id} className="cart__item">
                             <img src={url} className="cart__item-img" alt={title}></img>

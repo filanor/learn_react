@@ -59,7 +59,7 @@ const mapDispatchToProps = {
 
 
 
-export default WithRestoService ()( connect(mapStateToProps, mapDispatchToProps)(MenuList) );
+//export default WithRestoService ()( connect(mapStateToProps, mapDispatchToProps)(MenuList) );
 
 // MenuList обернут в компонент высшего порядка connect, который обернут
 // в компонент высшего порядка WithRestoService

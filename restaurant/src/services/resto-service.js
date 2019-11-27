@@ -26,7 +26,8 @@ export default class RestoService{
     }
 
     async setOrder(order) {
-        //const response = await fetch(`${this._apiBase}/order`);
+        // console.log(`order: ${order}`);
+        // console.log(order);
         const response = await fetch(`${this._apiBase}/order`, {
             method: 'POST', 
             headers: {

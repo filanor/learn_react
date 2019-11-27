@@ -3,22 +3,24 @@ import * as actions from '../actions';
 import {connect} from 'react-redux';
 
 
-const Todos = () => {
-    const todos = store.getState();
+const Todos = ({todos}) => {
+    console.log(todos);
     return (
-        <div class="task-block">
-          <div class="task done">
-            <label for="">Learn React</label>
+        <div className="task-block">
+          <div className="task done">
+            <label htmlFor="">Learn React</label>
           </div>
-          <div class="task">
-            <label for="">Redux is awesome</label>
+          <div className="task">
+            <label htmlFor="">Redux is awesome</label>
           </div>
         </div>
     )
 }
 
-const mapStateToProps = (store) => {
-    todos: store.getState()
+const mapStateToProps = ({state}) => {
+  return{
+    todos: state
+  }
 }
 
-export default connect()(Todos);
+export default connect(mapStateToProps)(Todos);
