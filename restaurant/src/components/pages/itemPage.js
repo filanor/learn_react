@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import WithRestoService from '../hoc/';
 import Spinner from '../spinner';
+import Error from '../error';
 import {menuLoaded, menuRequested, menuError} from '../../actions';
 
 import './itemPage.css';
@@ -22,16 +23,24 @@ class ItemPage extends Component {
     }
 
     render() {
-        if(this.props.loading) {
+        const {loading, error, menuItems} = this.props;
+        if(error) {
+            return (
+                <div className = "item_page">
+                    <Error/>
+                </div>
+            )
+        }
+        if(loading) {
             return (
                 <div className = "item_page">
                     <Spinner/>
                 </div>
             )
         }
-        const item = this.props.menuItems.find(el => +el.id === +this.props.match.params.id)
+        const item = menuItems.find(el => +el.id === +this.props.match.params.id)
         const{title, url, category, price} = item;
-        console.log(this.props.menuItems)
+        //console.log(this.props.menuItems)
 
 
         return (
