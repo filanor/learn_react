@@ -33,10 +33,7 @@ const reducer = (state = initialState, action) => {
         case 'ITEM_ADD_TO_CART':
             const id = action.payload;
             
-            // Формиреум добавляемый товар
             const itemInd = state.items.findIndex(item => item.id === id);
-
-            
             if (itemInd >= 0){
                 const itemInState = state.items.find(item => item.id === id);
                 const newItem = {
@@ -77,7 +74,6 @@ const reducer = (state = initialState, action) => {
             const idx = action.payload;
             const itemIndex = state.items.findIndex(item => item.id === idx)
             const price = state.items[itemIndex]['price'] * state.items[itemIndex]['qtty'];
-            console.log(price);
             return {
                 ...state, 
                 items: [

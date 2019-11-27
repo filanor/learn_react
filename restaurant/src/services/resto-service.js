@@ -25,6 +25,19 @@ export default class RestoService{
         return item;
     }
 
+    async setOrder(order) {
+        //const response = await fetch(`${this._apiBase}/order`);
+        const response = await fetch(`${this._apiBase}/order`, {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(order)
+        });
+        if (!response.ok){
+            throw new Error('json error'); 
+        }
+    }
 
 
     //url = 'http://localhost:3000/menu';

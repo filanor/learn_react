@@ -4,10 +4,8 @@ import './app-header.scss';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const AppHeader = (props) => {
-    const {totalPrice} = props;
-    console.log(props);
-    //console.log(`totalPrice: ${totalPrice}`);
+const AppHeader = ({totalPrice}) => {
+
     return (
         <header className="header">
             <Link to ={'/'} className = "header__link">Menu</Link>

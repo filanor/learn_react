@@ -16,7 +16,7 @@ const App = () => {
     //     .catch(error => {console.log('Произошла ошибка')})
     return (
         <div style={{background: `url(${Background}) center center/cover no-repeat`}} className="app">
-            <AppHeader total={50}/>
+            <AppHeader/>
             <Switch>
                 <Route path = '/' exact component = {MainPage}/>
                 <Route path = '/cart' exact component = {CartPage}/>
