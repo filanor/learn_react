@@ -15,6 +15,10 @@
     padding: 25px 50px 13px 50px;
 }
 
+.task-block{
+    min-height: 90px;
+}
+
 
 .task{
     position: relative;

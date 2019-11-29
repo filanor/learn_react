@@ -13,14 +13,14 @@ const addedTODO = (text) => {
     }
 };
 
-const filter = () => {
+const filterToggle = () => {
     return {
-        type: 'FILTER'
+        type: 'FILTER_TOGGLE'
     }
 }
 
 export {
     toggleTODO,
     addedTODO,
-    filter
+    filterToggle
 };
