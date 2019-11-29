@@ -4,7 +4,8 @@ const initialState = {
     loading: true,
     error: false,
     items: [],
-    totalPrice: 0
+    totalPrice: 0,
+    justOrder: false
 }
 
 
@@ -15,20 +16,22 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 menu: action.payload,
                 loading: false,
-                error: false
+                error: false,
             };
         case 'MENU_REQUESTED':
             return {
                 ...state,
                 menu: state.menu,
                 loading: true,
-                error: false
+                error: false,
+                justOrder: false
             };
         case 'MENU_ERROR':
             return {
                 ...state,
                 menu: state.menu,
-                error: true
+                error: true,
+                justOrder: false
             };
         case 'ITEM_ADD_TO_CART':
             const id = action.payload;
@@ -81,6 +84,12 @@ const reducer = (state = initialState, action) => {
                     ...state.items.slice(itemIndex + 1)
                 ], 
                 totalPrice: state.totalPrice - price
+            }
+        case 'ORDER_DONE':
+            return {
+                ...state, 
+                items: [],
+                justOrder: true
             }
         default: 
             return state;

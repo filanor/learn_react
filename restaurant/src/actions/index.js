@@ -32,11 +32,18 @@ const deleteFromCart = (id) => {
     }
 }
 
+const orderDone = () => {
+    return {
+        type: 'ORDER_DONE'
+    }
+}
+
 
 export {
     menuLoaded,
     menuRequested,
     menuError, 
     addedToCart, 
-    deleteFromCart
+    deleteFromCart,
+    orderDone
 };

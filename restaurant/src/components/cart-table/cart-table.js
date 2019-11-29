@@ -1,12 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {deleteFromCart} from '../../actions';
+import {deleteFromCart, orderDone} from '../../actions';
 import WithRestoService from '../hoc';
 
 import './cart-table.scss';
 
 
-const CartTable = ({items, deleteFromCart, RestoService}) => {
+const CartTable = ({items, deleteFromCart, orderDone, RestoService, justOrder}) => {
+    if(justOrder){
+        return (<div className="cart__title"> Спасибо за заказ :) </div>)
+    }
     if( items.length === 0){
         return (<div className="cart__title"> Ваша корзина пуста :( </div>)
     }
@@ -29,7 +32,11 @@ const CartTable = ({items, deleteFromCart, RestoService}) => {
                 })
             }
             </div>
-            <button onClick = {() => {RestoService.setOrder( generateOrder(items))} } className = "order">Оформить заказ</button>
+            <button onClick = {() => {
+                        orderDone();
+                        RestoService.setOrder( generateOrder(items))
+                    }
+                } className = "order">Оформить заказ</button>
         </>
     );
 };
@@ -44,15 +51,17 @@ const generateOrder = (items) => {
     return newOrder;
 }
 
-const mapStateToProps = ({items}) => {
+const mapStateToProps = ({items, justOrder}) => {
     return{
-        items // items: items
+        items, // items: items
+        justOrder
     }
 };
 
 
 const mapDispatchToProps = {
-    deleteFromCart
+    deleteFromCart,
+    orderDone
 }
 
 // const mapDispatchToProps = () => {
