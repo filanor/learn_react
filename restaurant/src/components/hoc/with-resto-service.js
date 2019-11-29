@@ -1,6 +1,5 @@
 import React from 'react';
 import RestoServiceContext from '../resto-service-context';
-import RestoService from '../../services/resto-service';
 
 
 // Создаем компонент высшего порядка. (Это функция, которая возвращает функцию, которая как аргумент получает
