@@ -51,7 +51,8 @@ const generateOrder = (items) => {
     return newOrder;
 }
 
-const mapStateToProps = ({items, justOrder}) => {
+const mapStateToProps = ({cartReducer}) => {
+    const {items, justOrder} = cartReducer;
     return{
         items, // items: items
         justOrder

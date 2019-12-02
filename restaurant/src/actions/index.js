@@ -9,6 +9,7 @@ const menuLoaded = (newMenu) => {
 const menuRequested = () => {
     return {
         type: 'MENU_REQUESTED',
+        justOrder: false
     }
 }
 
@@ -18,10 +19,23 @@ const menuError = () => {
     }
 }
 
-const addedToCart = (id) => {
+const filterOn = (filter) => {
+    return {
+        type: 'FILTER_ON',
+        filter
+    }
+}
+const filterOff = () => {
+    return {
+        type: 'FILTER_ON',
+        filter: ''
+    }
+}
+
+const addedToCart = (/*id*/item) => {
     return {
         type: 'ITEM_ADD_TO_CART',
-        payload: id
+        payload: /*id*/item
     }
 }
 
@@ -43,6 +57,8 @@ export {
     menuLoaded,
     menuRequested,
     menuError, 
+    filterOn,
+    filterOff,
     addedToCart, 
     deleteFromCart,
     orderDone

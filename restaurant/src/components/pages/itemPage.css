@@ -24,6 +24,7 @@
     background-position: 50%;
     background-size: cover;
     background-repeat: no-repeat;
+    cursor: pointer;
 }
 .pizza {
     background-image: url('http://www-static.dreambox.com/wp-content/uploads/2015/02/Prize-Icon-Pizza.png');

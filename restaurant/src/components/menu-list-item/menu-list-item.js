@@ -8,13 +8,13 @@ import './menu-list-item.scss';
 //     }
 // }
 
-const MenuListItem = ( {menuItem, onAddToCart}) => {
+const MenuListItem = ( {menuItem, onAddToCart, filterOn}) => {
     const {title, price, url, category} = menuItem;
     
     return (
         <>
             <li className="menu__item">
-                <Link to = {`/${menuItem.id}`}>
+                <Link to = {`/catalog/${menuItem.id}`}>
                     <div className="menu__title">{title}</div>
                     <img className="menu__img" src={url} alt={title}></img>
                     <div className="menu__category">Category: <span>{category}</span></div>
@@ -24,7 +24,12 @@ const MenuListItem = ( {menuItem, onAddToCart}) => {
                             onAddToCart();
                         } } 
                         className="menu__btn">Add to cart</button>
-                    <span className = {`menu__category_Img ${category}`}></span>
+                    <span 
+                        onClick = {e => {
+                            e.preventDefault();
+                            filterOn();
+                        } }
+                        className = {`menu__category_Img ${category}`}></span>
                 </Link>
             </li>
         

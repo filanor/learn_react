@@ -5,14 +5,14 @@ import Spinner from '../spinner';
 import Error from '../error';
 import {menuLoaded, menuRequested, menuError, addedToCart} from '../../actions';
 
-import './itemPage.css';
+import './itemPage.css'; 
 
 
 
 class ItemPage extends Component {
 
     componentDidMount() {
-        if( this.props.menuItems.length === 0){
+         if( this.props.menuItems.length === 0){
             this.props.menuRequested();
 
             const {RestoService} = this.props;
@@ -20,7 +20,7 @@ class ItemPage extends Component {
                 .then(res => this.props.menuLoaded(res))
                 .catch(error => this.props.menuError());
         }
-    }
+     }
 
     render() {
         const {loading, error, menuItems} = this.props;
@@ -39,8 +39,7 @@ class ItemPage extends Component {
             )
         }
         const item = menuItems.find(el => +el.id === +this.props.match.params.id)
-        const{title, url, category, price, id} = item;
-        //console.log(this.props.menuItems)
+        const{title, url, category, price} = item;
 
 
         return (
@@ -50,7 +49,7 @@ class ItemPage extends Component {
                     <img className="menu__img" src={url} alt={title}></img>
                     <div className="menu__category">Category: <span>{category}</span></div>
                     <div className="menu__price">Price: <span>{price}$</span></div>
-                    <button onClick = {()=>this.props.addedToCart(id)} className="menu__btn">Add to cart</button>
+                    <button onClick = {()=>this.props.addedToCart(item)} className="menu__btn">Add to cart</button>
                     <span className = {`menu__category_Img ${category}`}></span> 
                 </div>
             </div>
@@ -61,11 +60,12 @@ class ItemPage extends Component {
 
 
 
-const mapStateToProps =  (state) =>{
+const mapStateToProps =  ({menuReducer}) =>{
+    const {menu, loading, error} = menuReducer;
     return {
-        menuItems: state.menu,
-        loading: state.loading,
-        error: state.error
+        menuItems: menu,
+        loading: loading,
+        error: error
     }
 }
 

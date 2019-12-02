@@ -20,9 +20,8 @@ const App = () => {
             <Switch>
                 <Route path = '/' exact component = {MainPage}/>
                 <Route path = '/cart' exact component = {CartPage}/>
-                {/* <Route path = '/catalog/' exact component = {MainPage}/> */}
-                <Route path = '/:id'  component ={ItemPage}/>
-                {/* <Route  exact component = {MainPage}/> */}
+                <Route path = '/catalog/:id' component = {ItemPage}/>
+                <Route  exact component = {MainPage}/>
             </Switch>
         </div>
     )

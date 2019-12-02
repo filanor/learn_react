@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MenuListItem from '../menu-list-item';
 import { connect } from 'react-redux';
 import WithRestoService from '../hoc';
-import {menuLoaded, menuRequested, menuError, addedToCart} from '../../actions';
+import {menuLoaded, menuRequested, menuError, addedToCart, filterOn, filterOff} from '../../actions';
 import Spinner from '../spinner';
 import Error from '../error';
 
@@ -24,20 +24,22 @@ class MenuList extends Component {
     }
 
     render() {
-        const {menuItems, loading, error, addedToCart} = this.props;
+        const {menu, loading, error, filter, addedToCart, filterOn, filterOff} = this.props;
         if (error){
             return <Error/>
         }
         if (loading) {
             return <Spinner/>
         }
-        const items = menuItems.map(menuItem => {
-                return ( <MenuListItem 
-                            key = {menuItem.id} 
-                            menuItem = {menuItem }
-                            onAddToCart = {() => addedToCart(menuItem.id)}/>
-                )
-            })
+        const filteredItems = filter!=='' ? menu.filter(item=>item.category===filter): menu;
+        const items = filteredItems.map(menuItem => {
+            return ( <MenuListItem 
+                        key = {menuItem.id} 
+                        menuItem = {menuItem }
+                        onAddToCart = {() => addedToCart(menuItem)}
+                        filterOn = {() => filter !== '' ? filterOff() : filterOn(menuItem.category)}/>
+                    )
+        })
 
         return (
             <View items = {items}/> 
@@ -45,11 +47,14 @@ class MenuList extends Component {
     }
 };
 
-const mapStateToProps =  (state) =>{
+const mapStateToProps =  ({menuReducer}) =>{
+    
+    const {menu, loading, error, filter} = menuReducer;
     return {
-        menuItems: state.menu,
-        loading: state.loading,
-        error: state.error
+        menu: menu,
+        loading: loading,
+        error: error,
+        filter: filter
     }
 }
 
@@ -58,7 +63,9 @@ const mapDispatchToProps = {
     menuLoaded: menuLoaded,
     menuRequested,
     menuError,
-    addedToCart
+    addedToCart,
+    filterOn,
+    filterOff
 }
 
 
