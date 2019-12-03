@@ -3,16 +3,19 @@ import {Link} from 'react-router-dom';
 
 import './item-small-view.sass';
 
-const ItemSmallView = ({type}) => {
+const ItemSmallView = ({type, item}) => {
+    console.log(item);
+    const {name, url, price} = item
     return (
         <Link to = "/item/" className={type}>
             <div>
-                <img src="https://www.sciencenews.org/sites/default/files/main/articles/100315_coffee_opener_NEW_0.jpg" alt="coffee"/>
+                
+                <img src={url} alt="coffee"/>
                     <div className="best__item-title">
-                        Solimo Coffee Beans 2kg
+                        {name}
                     </div>
-                    <div class="shop__item-country">Brazil</div>
-                    <div className="best__item-price">10.73$</div>
+                    <div className="shop__item-country">{item.country ? item.country : ''}</div>
+                    <div className="best__item-price">{price}</div>
             </div>
         </Link>
     )

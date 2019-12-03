@@ -1,14 +1,63 @@
-import React from 'react';
+import React, {Component} from 'react';
 import AppHeader from '../app-header';
 import ItemSmallView from '../item-small-view';
 
 import './coffee-page.sass';
 import beans from '../logo/Beans_logo_dark.svg';
+import { connect } from 'react-redux';
+import {catalogError, catalogLoaded, catalogRequested} from '../../actions';
+import CoffeeService from '../../services/coffee-service';
 
-const CoffeePage = () => {
-    return(
+class CoffeePage extends Component{ 
+    componentDidMount() {
+        this.props.catalogRequested();
+        
+        const {catalogLoaded, catalogError} = this.props
+        
+        const coffeeService = new CoffeeService()
+        coffeeService.getCatalog()
+            .then(res => catalogLoaded(res))
+            .catch(err=> catalogError(err));
+    }
+
+    render() {
+        const {catalog} = this.props;
+
+        const items = catalog.map(item => {
+            return(
+                <ItemSmallView key = {item.id} type = 'shop__item' item = {item}/>
+            )
+        })
+
+        const content = <View content = {items}/>
+        return (
+            content
+        )
+    }
+}
+
+const mapStateToProps = (state) =>{
+    return {
+        loading: state.loading,
+        error: state.error,
+        catalog: state.catalog
+    }
+}
+
+const mapDispatchToProps = {
+    catalogError,
+    catalogLoaded,
+    catalogRequested
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CoffeePage);
+
+
+
+
+const View = ({content}) => {
+    return (
         <>
-    <div className="banner">
+            <div className="banner">
         <div className="container">
             <AppHeader/>
             <h1 className="title-big">Our Coffee</h1>
@@ -58,20 +107,13 @@ const CoffeePage = () => {
             <div class="row">
                 <div class="col-lg-10 offset-lg-1">
                     <div class="shop__wrapper">
-                        <ItemSmallView type = "shop__item"/>
-                        <ItemSmallView type = "shop__item"/>
-                        <ItemSmallView type = "shop__item"/>
-                        <ItemSmallView type = "shop__item"/>
-                        <ItemSmallView type = "shop__item"/>
-                        <ItemSmallView type = "shop__item"/>
+                        {content}
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    </>
-    );
-
+        </>
+    )
 }
 
-export default CoffeePage;
