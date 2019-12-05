@@ -1,7 +1,8 @@
 const initialState = {
     bestsellers: [],
     loading: true,
-    error: false
+    error: false,
+    formSended: false
 }
 const coffeeReducer = (state = initialState, action) => {
     switch(action.type){
@@ -25,6 +26,11 @@ const coffeeReducer = (state = initialState, action) => {
                 bestsellers: state.bestsellers,
                 loading: false,
                 error: true
+            }
+        case 'FORM_TOGGLE':
+            return {
+                ...state, 
+                formSended: !state.formSended
             }
         default:
             return state;

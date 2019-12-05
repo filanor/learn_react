@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
-import AppHeader from '../app-header';
+import {AppHeaderIndex} from '../app-header';
 import ItemSmallView from '../item-small-view';
-import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
-import {bestRequested, bestLoaded, bestError} from '../../actions'
+import {bestRequested, bestLoaded, bestError} from '../../actions';
+import Error from '../error';
+import Spinner from '../spinner';
+import {Link} from 'react-router-dom';
 
 import './main-page.sass';
-import beans from '../logo/Beans_logo.svg';
 import beansDark from '../logo/Beans_logo_dark.svg'
 import CoffeeService from '../../services/coffee-service'
 
@@ -25,49 +26,42 @@ class MainPage extends Component {
     }
     
     render() {
-        const {bestsellers} = this.props;
-        console.log(bestsellers);
-
-        const bestItems = bestsellers.map(item => {
+        const {bestsellers, error} = this.props;
+        if (error) {
             return (
-                <ItemSmallView key = {item.id} type = 'best__item' item = {item}/>
+                <View error = {error} />
+            );
+        }
+        const bestItems = bestsellers.map(item => {
+            const nameUrl = item.name.replace(/ /g, '_');
+            return (
+                <Link key = {item.id} to = {`/coffee/${nameUrl}`} className='best__item'>
+                    <ItemSmallView item = {item}/>
+                </Link>
             )
         });
-        console.log(bestItems)
-        const content = <View bestItems = {bestItems}/>;
+        // const content = <View bestItems = {bestItems}/>;
         return (
-            content
+            <View bestItems = {bestItems} />
         );
     }
 }
 
 
 
-const View = (props) => {
-    console.log(props);
-    const {bestItems} = props;
+const View = (props) => { 
+    const {bestItems, error = false} = props;
     return (
         <>
-        <div className="preview">
-            <div className="container">
-                <AppHeader/>
-                <div className="row">
-                    <div className="col-lg-10 offset-lg-1">
-                        <h1 className="title-big">Everything You Love About Coffee</h1>
-                        <img className="beanslogo" src={beans} alt="Beans logo"/>
-                        <div className="preview__subtitle">We makes every day full of energy and taste</div>
-                        <div className="preview__subtitle">Want to try our beans?</div>
-                        <Link to="/coffee/" className="preview__btn">More</Link>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        <AppHeaderIndex/>
+ 
         <section className="about">
             <div className="container">
                 <div className="row">
                     <div className="col-lg-6 offset-lg-3">
                         <div className="title">About Us</div>
-                        <img class="beanslogo" src={beansDark} alt="Beans logo"/>
+                        <img className="beanslogo" src={beansDark} alt="Beans logo"/>
                         <div className="about__text">
                             Extremity sweetness difficult behaviour he of. On disposal of as landlord horrible.
                             Afraid at highly months do things on at. Situation recommend objection do intention
@@ -91,7 +85,7 @@ const View = (props) => {
                 <div className="row">
                     <div className="col-lg-10 offset-lg-1">
                         <div className="best__wrapper">
-                            {bestItems}
+                            {error ? <Error/> : bestItems.length === 0 ? <Spinner/> : bestItems}
                         </div>
                     </div>
                 </div>

@@ -19,9 +19,16 @@ export default class CoffeeService {
         return catalog.map(this._transformCatalog);
     }
 
-    // async getCoffee(id) {
+    async setContact(data) {
+        fetch(`${this._baseUrl}/contacts`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              },
+            body: JSON.stringify(data)
+        })
 
-    // }
+    }
     _transformCatalog(item, i){
         return {
             ...item,
@@ -35,4 +42,5 @@ export default class CoffeeService {
             id: `b_${i}`
         }
     } 
+
 }

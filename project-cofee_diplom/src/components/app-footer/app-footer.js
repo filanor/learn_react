@@ -12,7 +12,7 @@ const AppFooter = () => {
         <footer>
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-5 offset-lg-4">
+                    <div className="col-lg-6 offset-lg-3">
                         <ul className="footer">
                             <li className="footer__item">
                                 <Link to = "/">
@@ -24,6 +24,9 @@ const AppFooter = () => {
                             </li>
                             <li className="footer__item">
                                 <Link to="/pleasure/">For your pleasure</Link>
+                            </li>
+                            <li className="footer__item">
+                                <Link to = "/contact/">Contact us</Link>
                             </li>
                         </ul>
                     </div>

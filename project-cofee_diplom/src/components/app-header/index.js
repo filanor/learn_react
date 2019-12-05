@@ -1,3 +1,7 @@
 import AppHeader from './app-header';
+import AppHeaderIndex from './app-header-index';
 
-export default AppHeader;
+export  {
+    AppHeader,
+    AppHeaderIndex
+}

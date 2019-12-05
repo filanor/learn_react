@@ -10,7 +10,8 @@ const initialState = {
     catalog: [],
     bestsellers: [],
     loading: true,
-    error: false
+    error: false,
+    formSended: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -56,6 +57,11 @@ const reducer = (state = initialState, action) => {
                 catalog: state.catalog,
                 loading: false,
                 error: true
+            }
+        case 'FORM_TOGGLE':
+            return {
+                ...state, 
+                formSended: !state.formSended
             }
         default:
             return state;

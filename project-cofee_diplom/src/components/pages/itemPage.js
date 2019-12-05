@@ -1,47 +1,95 @@
-import React from 'react';
+import React, {Component} from 'react';
+import CoffeeService from '../../services/coffee-service';
+import Spinner from '../spinner';
+import {AppHeader} from '../app-header';
+import {catalogError, catalogLoaded, catalogRequested} from '../../actions';
 
-import AppHeader from '../app-header'
+import beans from '../logo/Beans_logo_dark.svg';
+import { connect } from 'react-redux';
 
-import beans from '../logo/Beans_logo_dark.svg'
+
+class ItemPage extends Component {
+    state = {
+        fullDesc: false
+    }
+
+    componentDidMount() {
+        this.props.catalogRequested();
+        
+        const {catalogLoaded, catalogError} = this.props
+        
+        const coffeeService = new CoffeeService()
+        coffeeService.getCatalog()
+            .then(res => catalogLoaded(res))
+            .catch(err=> catalogError(err));
+    }
 
 
-const ItemPage = () => {
-    return (
-        <>
-                <div class="banner">
-        <div class="container">
-            <AppHeader/>
-            <h1 class="title-big">Our Coffee</h1>
-        </div>
-    </div>
-    <section class="shop">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 offset-1">
-                    <img class="shop__girl" src="/img/coffee_item.jpg" alt="coffee_item"/>
-                </div>
-                <div class="col-lg-4">
-                    <div class="title">About it</div>
-                    <img class="beanslogo" src={beans} alt="Beans logo"/>
-                    <div class="shop__point">
-                        <span>Country:</span>
-                        Brazil
+    render() {
+        const urlName = this.props.match.params.name.replace(/_/g, ' ');
+        if (this.props.loading){
+            return (
+                <>
+                    <AppHeader title = {urlName}/>
+                    <Spinner/>
+                </>
+                )
+        }
+        const {catalog} = this.props;
+        
+        const item = catalog.find(el => el.name === urlName);
+        const {url, country, description, price} = item;
+        
+        
+        const desc = (!this.state.fullDesc&&description.length>200) ? description.slice(0, 201) + '...' : description;
+    
+
+        return (
+            <>
+                <AppHeader title = {urlName}/>
+                <section className="shop">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-lg-5 offset-1">
+                                <img className="shop__girl" src={url} alt="coffee_item"/>
+                            </div>
+                            <div className="col-lg-4">
+                                <div className="title">About it</div>
+                                <img className="beanslogo" src={beans} alt="Beans logo"/>
+                                <div className="shop__point">
+                                    <span>Country:</span>
+                                    {country}
+                                </div>
+                                <div className="shop__point" onClick = {() =>{
+                                    this.setState({fullDesc: !this.state.fullDesc})
+                                }}>
+                                    <span>Description:</span>
+                                    {desc}
+                                </div>
+                                <div className="shop__point">
+                                    <span>Price: </span>
+                                    <span className="shop__point-price">{price}$</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="shop__point">
-                        <span>Description:</span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </div>
-                    <div class="shop__point">
-                        <span>Price:</span>
-                        <span class="shop__point-price">16.99$</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-        </>
-    );
+                </section>
+            </>
+        );
+    }
 }
 
-export default ItemPage;
+const mapStateToProps = (state) => {
+    return {
+        catalog: state.catalog,
+        loading: state.loading
+    }
+}
+
+const mapDispatchToProps = {
+    catalogError,
+    catalogLoaded,
+    catalogRequested
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemPage);

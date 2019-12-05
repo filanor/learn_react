@@ -30,6 +30,10 @@ const catalogError = () => {
     return { type: 'CATALOG_ERROR' }
 }
 
+const formToggle = () => {
+    return {type: 'FORM_TOGGLE'}
+}
+
 
 export {
     bestRequested,
@@ -37,5 +41,6 @@ export {
     bestError,
     catalogLoaded,
     catalogRequested,
-    catalogError
+    catalogError,
+    formToggle
 }

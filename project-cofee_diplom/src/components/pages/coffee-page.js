@@ -1,31 +1,27 @@
 import React, {Component} from 'react';
-import AppHeader from '../app-header';
 import ItemSmallView from '../item-small-view';
+import Spinner from '../spinner';
+import { connect } from 'react-redux';
+import Filter from '../filter';
+import {Link} from 'react-router-dom';
 
 import './coffee-page.sass';
 import beans from '../logo/Beans_logo_dark.svg';
-import { connect } from 'react-redux';
-import {catalogError, catalogLoaded, catalogRequested} from '../../actions';
-import CoffeeService from '../../services/coffee-service';
 
 class CoffeePage extends Component{ 
-    componentDidMount() {
-        this.props.catalogRequested();
-        
-        const {catalogLoaded, catalogError} = this.props
-        
-        const coffeeService = new CoffeeService()
-        coffeeService.getCatalog()
-            .then(res => catalogLoaded(res))
-            .catch(err=> catalogError(err));
-    }
-
     render() {
+        if (this.props.loading){
+            return <View type = 'loading'/>
+        }
+
         const {catalog} = this.props;
 
         const items = catalog.map(item => {
+            const nameUrl = item.name.replace(/ /g, '_');
             return(
-                <ItemSmallView key = {item.id} type = 'shop__item' item = {item}/>
+                <Link key = {item.id} to = {`/coffee/${nameUrl}`} className='shop__item'>
+                    <ItemSmallView item = {item}/>
+                </Link>
             )
         })
 
@@ -44,75 +40,46 @@ const mapStateToProps = (state) =>{
     }
 }
 
-const mapDispatchToProps = {
-    catalogError,
-    catalogLoaded,
-    catalogRequested
-}
-export default connect(mapStateToProps, mapDispatchToProps)(CoffeePage);
+export default connect(mapStateToProps)(CoffeePage);
 
 
+ 
 
-
-const View = ({content}) => {
+const View = ({content, type = ''}) => {
     return (
         <>
-            <div className="banner">
-        <div className="container">
-            <AppHeader/>
-            <h1 className="title-big">Our Coffee</h1>
-        </div>
-    </div>
-    <section className="shop">
-        <div className="container">
-            <div className="row">
-                <div className="col-lg-4 offset-2">
-                    <img className="shop__girl" src="/img/coffee_girl.jpg" alt="girl"/>
-                </div>
-                <div className="col-lg-4">
-                    <div className="title">About our beans</div>
-                    <img className="beanslogo" src={beans} alt="Beans logo"/>
-                    <div className="shop__text">
-                        Extremity sweetness difficult behaviour he of. On disposal of as landlord horrible.
-                        <br/><br/>
-                        Afraid at highly months do things on at. Situation recommend objection do intention<br/>
-                        so questions. <br/>
-                        As greatly removed calling pleased improve an. Last ask him cold feel<br/>
-                        met spot shy want. Children me laughing we prospect answered followed. At it went<br/>
-                        is song that held help face.
-                    </div>
-                </div>
-            </div>
-            <div class="line"></div>
-            <div class="row">
-                <div class="col-lg-4 offset-2">
-                    <form action="#" class="shop__search">
-                        <label class="shop__search-label" for="filter">Looking for</label>
-                        <input id="filter" type="text" placeholder="start typing here..." class="shop__search-input"/>
-                    </form>
-                </div>
-                <div class="col-lg-4">
-                    <div class="shop__filter">
-                        <div class="shop__filter-label">
-                            Or filter
+            {/* <AppHeader title = 'Our Coffee'/> */}
+            <section className="shop">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-4 offset-2">
+                            <img className="shop__girl" src="/img/coffee_girl.jpg" alt="girl"/>
                         </div>
-                        <div class="shop__filter-group">
-                            <button class="shop__filter-btn">Brazil</button>
-                            <button class="shop__filter-btn">Kenya</button>
-                            <button class="shop__filter-btn">Columbia</button>
+                        <div className="col-lg-4">
+                            <div className="title">About our beans</div>
+                            <img className="beanslogo" src={beans} alt="Beans logo"/>
+                            <div className="shop__text">
+                                Extremity sweetness difficult behaviour he of. On disposal of as landlord horrible.
+                                <br/><br/>
+                                Afraid at highly months do things on at. Situation recommend objection do intention<br/>
+                                so questions. <br/>
+                                As greatly removed calling pleased improve an. Last ask him cold feel<br/>
+                                met spot shy want. Children me laughing we prospect answered followed. At it went<br/>
+                                is song that held help face.
+                            </div>
+                        </div>
+                    </div>
+                    <div className="line"></div>
+                    <Filter/>
+                    <div className="row">
+                        <div className="col-lg-10 offset-lg-1">
+                            <div className="shop__wrapper">
+                                { type === 'loading'? <Spinner/> : content}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-10 offset-lg-1">
-                    <div class="shop__wrapper">
-                        {content}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
         </>
     )
 }
