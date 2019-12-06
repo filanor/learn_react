@@ -2,7 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {filterCountry} from '../../actions';
 
-const Filter = ({filterCountry}) => {
+const Filter = ({filterCountry, filter}) => {
+
+    const setFilter = (country) => {
+        if(country === filter){
+            filterCountry('');
+        } else{
+            filterCountry(country);
+        }
+        return null;
+    }
+    
 
     return(
         <div className="row">
@@ -18,9 +28,9 @@ const Filter = ({filterCountry}) => {
                         Or filter
                     </div>
                     <div className="shop__filter-group">
-                        <button className="shop__filter-btn" onClick = {() => filterCountry('Brazil')}>Brazil</button>
-                        <button className="shop__filter-btn" onClick = {() => filterCountry('Kenya') }>Kenya</button>
-                        <button className="shop__filter-btn" onClick = {() => filterCountry('Columbia')}>Columbia</button>
+                        <button className="shop__filter-btn" onClick = {() => setFilter('Brazil')}>Brazil</button>
+                        <button className="shop__filter-btn" onClick = {() => setFilter('Kenya') }>Kenya</button>
+                        <button className="shop__filter-btn" onClick = {() => setFilter('Columbia')}>Columbia</button>
                     </div>
                 </div>
             </div>
@@ -28,8 +38,14 @@ const Filter = ({filterCountry}) => {
     )
 }
 
+const mapStateToProps = ({filterReducer}) => {
+    return {
+        filter: filterReducer.country
+    }
+}
+
 const mapDispatchToProps = {
     filterCountry
 }
 
-export default connect(null, mapDispatchToProps)(Filter) 
+export default connect(mapStateToProps, mapDispatchToProps)(Filter) 

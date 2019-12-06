@@ -15,7 +15,6 @@ class CoffeePage extends Component{
         }
 
         const {catalog, filter} = this.props;
-        console.log(filter);
         let filteredCatalog = [];
         if (filter !== ''){
             filteredCatalog = catalog.filter(item => item.country === filter);
