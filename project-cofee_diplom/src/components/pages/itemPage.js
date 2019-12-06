@@ -27,10 +27,13 @@ class ItemPage extends Component {
 
     render() {
         const urlName = this.props.match.params.name.replace(/_/g, ' ');
+
+        const appContent = {title: urlName, style: ''};
+
         if (this.props.loading){
             return (
                 <>
-                    <AppHeader title = {urlName}/>
+                    <AppHeader content = {appContent}/>
                     <Spinner/>
                 </>
                 )
@@ -46,7 +49,7 @@ class ItemPage extends Component {
 
         return (
             <>
-                <AppHeader title = {urlName}/>
+                <AppHeader content = {appContent}/>
                 <section className="shop">
                     <div className="container">
                         <div className="row">
@@ -79,10 +82,11 @@ class ItemPage extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({catalogReducer}) => {
+    const {catalog, loading} = catalogReducer;
     return {
-        catalog: state.catalog,
-        loading: state.loading
+        catalog,
+        loading
     }
 }
 

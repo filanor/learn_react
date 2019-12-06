@@ -15,6 +15,7 @@ const ContactPage = ({formSended, formToggle}) => {
                 <img className="beanslogo" src='/img/Beans_logo_dark.svg' alt="Beans logo"/>
                 <span className = "contact-page__info">Thank you so much</span> 
                 <span className = "contact-page__info">We contact you as soon as posible</span>
+                <button className = "contact-page__returnBtn">Another ? </button>
             </div>
         )
     }

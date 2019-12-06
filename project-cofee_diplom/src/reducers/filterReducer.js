@@ -1,15 +1,16 @@
 const initialState = {
-    items: [],
-    loadin: true,
-    error: false
+    search: '',
+    country: ''
 }
-const coffeeReducer = (state = initialState, action) => {
+const filterReducer = (state = initialState, action) => {
     switch(action.type){
-        case 'BEST_LOADED':
+        case 'FILTER_SEARCH':
+            return
+        case 'FILTER_COUNTRY':
             return
         default:
             return state;
     }
 }
 
-export default coffeeReducer;
+export default filterReducer;

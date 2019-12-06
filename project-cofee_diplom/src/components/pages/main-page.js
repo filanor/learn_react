@@ -96,11 +96,12 @@ const View = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({catalogReducer}) => {
+    const {bestsellers, error, loading} = catalogReducer;
     return {
-        bestsellers: state.bestsellers, 
-        error: state.error,
-        loading: state.loading
+        bestsellers, 
+        error,
+        loading
     }
 }
 

@@ -5,9 +5,10 @@ import './app-header.sass';
 import logo from '../logo/Logo.svg';
 
 
-const AppHeader = ({title = '', bg = ''}) => {
+const AppHeader = ({content}) => {
+    const {title, style} = content;
     return (
-        <div className="banner">
+        <div className={`banner ${style}`}>
             <div className="container">
                 <div className="row">
                     <div className="col-lg-6">

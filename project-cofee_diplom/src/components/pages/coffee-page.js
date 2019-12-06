@@ -32,11 +32,12 @@ class CoffeePage extends Component{
     }
 }
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = ({catalogReducer}) =>{
+    const {loading, error, catalog} = catalogReducer
     return {
-        loading: state.loading,
-        error: state.error,
-        catalog: state.catalog
+        loading, 
+        error,
+        catalog
     }
 }
 

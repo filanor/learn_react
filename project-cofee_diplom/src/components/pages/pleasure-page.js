@@ -29,10 +29,11 @@ const PleasurePage = (props) => {
 
 
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = ({catalogReducer}) =>{
+    const {loading, catalog} = catalogReducer
     return {
-        loading: state.loading,
-        catalog: state.catalog
+        loading: loading,
+        catalog: catalog
     }
 }
 
@@ -47,7 +48,7 @@ const View = ({content, type = ''}) => {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-4 offset-2">
-                            <img className="shop__girl" src="/img/coffee_girl.jpg" alt="girl"/>
+                            <img className="shop__girl" src="/img/coffee_cup.png" alt="girl"/>
                         </div>
                         <div className="col-lg-4">
                             <div className="title">About our beans</div>

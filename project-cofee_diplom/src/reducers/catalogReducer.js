@@ -1,10 +1,12 @@
 const initialState = {
+    catalog: [],
     bestsellers: [],
     loading: true,
     error: false,
     formSended: false
 }
-const coffeeReducer = (state = initialState, action) => {
+
+const catalogReducer = (state = initialState, action) => {
     switch(action.type){
         case 'BEST_REQUESTED':
             return {
@@ -27,6 +29,27 @@ const coffeeReducer = (state = initialState, action) => {
                 loading: false,
                 error: true
             }
+        case 'CATALOG_REQUESTED':
+            return {
+                ...state,
+                catalog: state.catalog,
+                loading: true,
+                error: false
+            }
+        case 'CATALOG_LOADED':
+            return {
+                ...state,
+                catalog: action.payload,
+                loading: false,
+                error: false
+            }
+        case 'CATALOG_ERROR':
+            return {
+                ...state, 
+                catalog: state.catalog,
+                loading: false,
+                error: true
+            }
         case 'FORM_TOGGLE':
             return {
                 ...state, 
@@ -37,4 +60,4 @@ const coffeeReducer = (state = initialState, action) => {
     }
 }
 
-export default coffeeReducer;
+export default catalogReducer;

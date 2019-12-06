@@ -32,28 +32,28 @@ class Layout extends Component {
 
 
         const {url} = children.props.match;
-        let pageName = '';
+        let headerContent = {};
         if(url === '/pleasure/'){
-            pageName = 'For your pleasure';
+            headerContent = {title: 'For your pleasure', style: 'banner_pleasure'};
         } else if (url === '/coffee'){
-            pageName = 'Our Coffee';
+            headerContent = {title: 'Our Coffee', style: ''};
         } else if (url === '/contact/'){
-            pageName = 'Contact Us';
+            headerContent = {title: 'Contact Us', style: 'banner_contact'};
         }
 
         
         return (
             <>
-                <AppHeader title = {pageName}/>
+                <AppHeader content = {headerContent}/>
                 {children}
             </>
         )
     }
 }
 
-const mapStateToProps = ({error}) => {
+const mapStateToProps = ({catalogReducer}) => {
     return {
-        error: error,
+        error: catalogReducer.error,
     }
 }
 
