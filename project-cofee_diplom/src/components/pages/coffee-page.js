@@ -14,12 +14,17 @@ class CoffeePage extends Component{
             return <View type = 'loading'/>
         }
 
-        const {catalog, filter} = this.props;
+        const {catalog, filter, search} = this.props;
         let filteredCatalog = [];
+
         if (filter !== ''){
             filteredCatalog = catalog.filter(item => item.country === filter);
         } else {
             filteredCatalog = catalog;
+        }
+
+        if (search !== ''){
+            filteredCatalog = filteredCatalog.filter(item => item.name.indexOf(search) >= 0)
         }
 
 

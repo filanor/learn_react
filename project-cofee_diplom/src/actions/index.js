@@ -41,6 +41,13 @@ const filterCountry = (country) => {
     }
 }
 
+const filterSearch = (text) => {
+    return {
+        type: 'FILTER_SEARCH',
+        search: text
+    }
+}
+ 
 
 export {
     bestRequested,
@@ -50,5 +57,7 @@ export {
     catalogRequested,
     catalogError,
     formToggle,
-    filterCountry
+    filterCountry, 
+    filterSearch
+
 }

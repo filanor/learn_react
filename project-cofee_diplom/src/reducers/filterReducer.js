@@ -5,7 +5,10 @@ const initialState = {
 const filterReducer = (state = initialState, action) => {
     switch(action.type){
         case 'FILTER_SEARCH':
-            return
+            return {
+                ...state,
+                search: action.search
+            }
         case 'FILTER_COUNTRY':
             return {
                 ...state, 

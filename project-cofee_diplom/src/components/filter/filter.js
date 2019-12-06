@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {filterCountry} from '../../actions';
+import {filterCountry, filterSearch} from '../../actions';
 
-const Filter = ({filterCountry, filter}) => {
+const Filter = ({filterCountry, filter, search, filterSearch}) => {
 
     const setFilter = (country) => {
         if(country === filter){
@@ -12,14 +12,19 @@ const Filter = ({filterCountry, filter}) => {
         }
         return null;
     }
-    
+
+    const setSearch = (text) => {
+        filterSearch(text);
+    }
+
 
     return(
         <div className="row">
             <div className="col-lg-4 offset-2">
                 <form action="#" className="shop__search">
                     <label className="shop__search-label" htmlFor="filter">Looking for</label>
-                    <input id="filter" type="text" placeholder="start typing here..." className="shop__search-input"/>
+                    <input id="filter" type="text" placeholder="start typing here..." className="shop__search-input"
+                            onChange = {(e) => setSearch(e.target.value)}/>
                 </form>
             </div>
             <div className="col-lg-4">
@@ -40,12 +45,14 @@ const Filter = ({filterCountry, filter}) => {
 
 const mapStateToProps = ({filterReducer}) => {
     return {
-        filter: filterReducer.country
+        filter: filterReducer.country,
+        search: filterReducer.search
     }
 }
 
 const mapDispatchToProps = {
-    filterCountry
+    filterCountry,
+    filterSearch
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter) 
