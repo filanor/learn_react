@@ -34,6 +34,13 @@ const formToggle = () => {
     return {type: 'FORM_TOGGLE'}
 }
 
+const filterCountry = (country) => {
+    return {
+        type: 'FILTER_COUNTRY',
+        filter: country
+    }
+}
+
 
 export {
     bestRequested,
@@ -42,5 +49,6 @@ export {
     catalogLoaded,
     catalogRequested,
     catalogError,
-    formToggle
+    formToggle,
+    filterCountry
 }

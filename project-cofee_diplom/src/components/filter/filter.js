@@ -1,8 +1,9 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
+import {filterCountry} from '../../actions';
 
-const Filter = () => {
+const Filter = ({filterCountry}) => {
+
     return(
         <div className="row">
             <div className="col-lg-4 offset-2">
@@ -17,9 +18,9 @@ const Filter = () => {
                         Or filter
                     </div>
                     <div className="shop__filter-group">
-                        <button className="shop__filter-btn">Brazil</button>
-                        <button className="shop__filter-btn">Kenya</button>
-                        <button className="shop__filter-btn">Columbia</button>
+                        <button className="shop__filter-btn" onClick = {() => filterCountry('Brazil')}>Brazil</button>
+                        <button className="shop__filter-btn" onClick = {() => filterCountry('Kenya') }>Kenya</button>
+                        <button className="shop__filter-btn" onClick = {() => filterCountry('Columbia')}>Columbia</button>
                     </div>
                 </div>
             </div>
@@ -28,7 +29,7 @@ const Filter = () => {
 }
 
 const mapDispatchToProps = {
-
+    filterCountry
 }
 
-export default connect(null, mapDispatchToProps)(Filter)
+export default connect(null, mapDispatchToProps)(Filter) 

@@ -21,17 +21,9 @@ class Layout extends Component {
 
     render() {
         const {error, children} = this.props;
-        if(error){
-            return(
-                <>
-                    <AppHeader/>
-                    <Error/>
-                </>
-            )
-        }
-
 
         const {url} = children.props.match;
+        
         let headerContent = {};
         if(url === '/pleasure/'){
             headerContent = {title: 'For your pleasure', style: 'banner_pleasure'};
@@ -39,6 +31,15 @@ class Layout extends Component {
             headerContent = {title: 'Our Coffee', style: ''};
         } else if (url === '/contact/'){
             headerContent = {title: 'Contact Us', style: 'banner_contact'};
+        }
+        
+        if(error){
+            return(
+                <>
+                    <AppHeader content = {headerContent}/>
+                    <Error/>
+                </>
+            )
         }
 
         

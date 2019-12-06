@@ -14,9 +14,17 @@ class CoffeePage extends Component{
             return <View type = 'loading'/>
         }
 
-        const {catalog} = this.props;
+        const {catalog, filter} = this.props;
+        console.log(filter);
+        let filteredCatalog = [];
+        if (filter !== ''){
+            filteredCatalog = catalog.filter(item => item.country === filter);
+        } else {
+            filteredCatalog = catalog;
+        }
 
-        const items = catalog.map(item => {
+
+        const items = filteredCatalog.map(item => {
             const nameUrl = item.name.replace(/ /g, '_');
             return(
                 <Link key = {item.id} to = {`/coffee/${nameUrl}`} className='shop__item'>
@@ -32,12 +40,14 @@ class CoffeePage extends Component{
     }
 }
 
-const mapStateToProps = ({catalogReducer}) =>{
-    const {loading, error, catalog} = catalogReducer
+const mapStateToProps = ({catalogReducer, filterReducer}) =>{
+    const {loading, catalog} = catalogReducer;
+    const {search, country} = filterReducer;
     return {
         loading, 
-        error,
-        catalog
+        catalog,
+        filter: country,
+        search
     }
 }
 

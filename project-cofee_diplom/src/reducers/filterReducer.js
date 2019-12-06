@@ -7,10 +7,13 @@ const filterReducer = (state = initialState, action) => {
         case 'FILTER_SEARCH':
             return
         case 'FILTER_COUNTRY':
-            return
+            return {
+                ...state, 
+                country: action.filter
+            }
         default:
             return state;
     }
 }
 
-export default filterReducer;
+export default filterReducer; 
