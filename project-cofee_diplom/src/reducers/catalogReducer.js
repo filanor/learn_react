@@ -37,7 +37,7 @@ const catalogReducer = (state = initialState, action) => {
                 error: false
             }
         case 'CATALOG_LOADED':
-            return {
+            return { 
                 ...state,
                 catalog: action.payload,
                 loading: false,

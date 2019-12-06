@@ -51,7 +51,7 @@ const filterSearch = (text) => {
 
 export {
     bestRequested,
-    bestLoaded,
+    bestLoaded, 
     bestError,
     catalogLoaded,
     catalogRequested,

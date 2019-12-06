@@ -24,7 +24,7 @@ class CoffeePage extends Component{
         }
 
         if (search !== ''){
-            filteredCatalog = filteredCatalog.filter(item => item.name.indexOf(search) >= 0)
+            filteredCatalog = filteredCatalog.filter(item => item.name.toLowerCase().indexOf(search.toLowerCase()) >= 0)
         }
 
 
@@ -63,7 +63,6 @@ export default connect(mapStateToProps)(CoffeePage);
 const View = ({content, type = ''}) => {
     return (
         <>
-            {/* <AppHeader title = 'Our Coffee'/> */}
             <section className="shop">
                 <div className="container">
                     <div className="row">

@@ -1,7 +1,9 @@
 .contact-page
     margin: 60px auto 0px auto!important
     max-width: 415px!important
-
+    .error
+        border: 1px solid red
+        color: red
     .beanslogo
         margin-bottom: 40px
     &__title
@@ -66,7 +68,7 @@
     &__info
         display: block
         font-size: 20px
-        line-height: 52px
+        line-height: 40px
         text-align: center
     &__returnBtn
         display: block
@@ -74,8 +76,16 @@
         height: 30px
         margin: 130px auto 30px auto
         border: 1px solid rgba(0, 0, 0, 0.49)
-        background: #ffffff
+        background-color: #ffffff
+        background-image: url('/img/another.png')
+        background-repeat: no-repeat
+        background-position: 90% 50%
         box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.25)
         border-radius: 4px
         font-size: 12px
         line-height: 17px
+    &__img
+        width: 110px
+        height: 70px
+        margin: 38px auto 0px auto
+        display: block

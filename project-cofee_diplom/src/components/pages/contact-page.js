@@ -5,9 +5,32 @@ import {formToggle} from '../../actions';
 
 import {Formik, Form, Field} from 'formik';
 
+
+
 import './contact-page.sass';
+import MaskedInput from "react-text-mask";
+
+const phoneNumberMask = [
+    "8",
+  "(",
+  /[1-9]/,
+  /\d/,
+  /\d/,
+  ")",
+  " ",
+  /\d/,
+  /\d/,
+  /\d/,
+  "-",
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/
+];
+
 
 const ContactPage = ({formSended, formToggle}) => {
+    console.log(formSended)
     if(formSended){
         return (
             <div className = "col-lg-4 offset-lg-4 contact-page">
@@ -15,7 +38,8 @@ const ContactPage = ({formSended, formToggle}) => {
                 <img className="beanslogo" src='/img/Beans_logo_dark.svg' alt="Beans logo"/>
                 <span className = "contact-page__info">Thank you so much</span> 
                 <span className = "contact-page__info">We contact you as soon as posible</span>
-                <button className = "contact-page__returnBtn">Another ? </button>
+                <img src = "/img/Vector.svg" className = "contact-page__img" alt = "form sended"/>
+                <button className = "contact-page__returnBtn" onClick = {()=>formToggle()}>Another ? </button>
             </div>
         )
     }
@@ -32,8 +56,10 @@ const ContactPage = ({formSended, formToggle}) => {
                     }}
                     onSubmit = {value => {
                         const coffeeService = new CoffeeService();
-                        console.log(value);
-                        coffeeService.setContact(value);
+                        console.log(value.phone);
+                        let newPhone = value.phone.replace(/-/g, '').replace(/_/g, '').replace(/\(/g, '').replace(/\)/g, '').replace(/ /g, '');
+                        newPhone = newPhone.length === 11 ? newPhone : '';
+                        coffeeService.setContact({...value, phone: newPhone});
                         formToggle();
                     }}
                     render = { ({errors, touched}) => (
@@ -51,6 +77,11 @@ const ContactPage = ({formSended, formToggle}) => {
                                             return 'min 2 max 20';
                                         }
                                     }}
+                                    className={
+                                        errors.name && touched.name
+                                        ? "error"
+                                        : ""
+                                    }
                                 />
                                 {errors.name && touched.name ? <div className ="contact-page__error">{errors.name}</div> : null}
                             </div>
@@ -67,6 +98,11 @@ const ContactPage = ({formSended, formToggle}) => {
                                         }
 
                                     }}
+                                    className={
+                                        errors.email && touched.email
+                                        ? "error"
+                                        : ""
+                                    }
                                 />
                                 {errors.email && touched.email ? <div className ="contact-page__error">{errors.email}</div> : null}
                             </div>
@@ -75,11 +111,18 @@ const ContactPage = ({formSended, formToggle}) => {
                             <div className = "contact-page__row">
                                 <label className = "contact-page__label" htmlFor = 'phone'>Phone</label>
                                 <Field
-                                    type = 'phone'
                                     name = 'phone'
-                                    id = 'phone'
-                                    mask = "+7 (999) 999-99-99"
-                                    //placeholder = '+7(___) ___-__-__'
+                                    render = { ({field}) => (
+                                        <MaskedInput
+                                            {...field}
+                                            mask={phoneNumberMask}
+                                            id="phone"
+                                            type="text"
+                                            guide = {true}
+                                            showMask = {true}
+                                            keepCharPositions = {true}
+                                        />
+                                    )}
                                 />
                             </div>
 
@@ -92,11 +135,16 @@ const ContactPage = ({formSended, formToggle}) => {
                                     component = 'textarea'
                                     placeholder = 'Tell us..'
                                     validate = {value=>{
-                                        if(!value || value.length < 6){
-                                            return 'must be email';
+                                        if(!value || value.length < 3){
+                                            return 'min 6';
                                         }
 
                                     }}
+                                    className={
+                                        errors.message && touched.message
+                                        ? "error"
+                                        : ""
+                                    }
                                 />
                                 {errors.message && touched.message ? <div className ="contact-page__error">{errors.message}</div> : null}
                             </div>
@@ -110,7 +158,8 @@ const ContactPage = ({formSended, formToggle}) => {
     )
 }
 
-const mapStateToProps = ({formSended}) => {
+const mapStateToProps = ({catalogReducer}) => {
+    const {formSended} = catalogReducer
     return {
         formSended: formSended
     }
