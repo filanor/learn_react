@@ -13,6 +13,7 @@ const PleasurePage = (props) => {
 
     const {catalog} = props;
 
+    console.log(catalog);
     const items = catalog.map(item => {
         return(
             <div className='shop__item' key = {item.id}>
@@ -30,10 +31,10 @@ const PleasurePage = (props) => {
 
 
 const mapStateToProps = ({catalogReducer}) =>{
-    const {loading, catalog} = catalogReducer
+    const {loading, goods} = catalogReducer
     return {
         loading: loading,
-        catalog: catalog
+        catalog: goods
     }
 }
 

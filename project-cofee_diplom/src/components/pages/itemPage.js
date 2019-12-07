@@ -63,7 +63,7 @@ class ItemPage extends Component {
                                     <span>Country:</span>
                                     {country}
                                 </div>
-                                <div className="shop__point" onClick = {() =>{
+                                <div className="shop__point shop__description" onClick = {() =>{
                                     this.setState({fullDesc: !this.state.fullDesc})
                                 }}>
                                     <span>Description:</span>

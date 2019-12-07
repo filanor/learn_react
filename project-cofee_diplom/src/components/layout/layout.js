@@ -1,28 +1,35 @@
 import React, {Component} from 'react';
 import {AppHeader} from '../app-header';
 import { connect } from 'react-redux';
-import {catalogError, catalogLoaded, catalogRequested} from '../../actions';
+import {catalogError, catalogLoaded, catalogRequested, goodsLoaded, goodsError, goodsRequested} from '../../actions';
 import Error from '../error';
 import CoffeeService from '../../services/coffee-service';
 
 class Layout extends Component {
 
     componentDidMount() {
-        const {catalogRequested, catalogLoaded, catalogError} = this.props
-        catalogRequested();
-        
+        const {url} = this.props.children.props.match;
+        console.log(url);
         const coffeeService = new CoffeeService()
-        coffeeService.getCatalog()
-            .then(res => catalogLoaded(res))
-            .catch(error => catalogError(error))
+        const {catalogRequested, catalogLoaded, catalogError, goodsLoaded} = this.props
+            catalogRequested();
+            coffeeService.getCatalog()
+                .then(res => catalogLoaded(res))
+                .catch(error => catalogError(error))
 
-
+            coffeeService.getGoods()
+                .then(res => goodsLoaded(res))
+                .catch(error => {console.log('ошибка'); catalogError(error)});
+        
     }
 
     render() {
-        const {error, children} = this.props;
+        const {error, children, catalog, goods} = this.props;
 
         const {url} = children.props.match;
+
+        console.log(`каталог: ${catalog}`);
+        console.log(`товары: ${goods}`);
         
         let headerContent = {};
         if(url === '/pleasure/'){
@@ -55,13 +62,18 @@ class Layout extends Component {
 const mapStateToProps = ({catalogReducer}) => {
     return {
         error: catalogReducer.error,
+        catalog: catalogReducer.catalog,
+        goods: catalogReducer.goods
     }
 }
 
 const mapDispatchToProps = {
     catalogError, 
     catalogLoaded, 
-    catalogRequested
+    catalogRequested,
+    goodsLoaded,
+    goodsError,
+    goodsRequested
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);

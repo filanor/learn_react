@@ -19,6 +19,12 @@ export default class CoffeeService {
         return catalog.map(this._transformCatalog);
     }
 
+    async getGoods() {
+        const goods = await this.getResource('/goods');
+        console.log(`получили с сервера ${goods}`);
+        return goods.map(this._transformCatalog);
+    }
+
     async setContact(data) {
         fetch(`${this._baseUrl}/contacts`, {
             method: 'POST',

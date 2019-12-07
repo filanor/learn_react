@@ -14,6 +14,19 @@ const bestError = () => {
 }
 
 
+const goodsLoaded = (goods) => {
+    return {
+        type: 'GOODS_LOADED',
+        payload: goods
+    }
+}
+const goodsRequested = () => {
+    return { type: 'GOODS_REQUESTED' }
+}
+
+const goodsError = () => {
+    return { type: 'GOODS_ERROR' }
+}
 
 const catalogLoaded = (catalog) => {
     return {
@@ -58,6 +71,8 @@ export {
     catalogError,
     formToggle,
     filterCountry, 
-    filterSearch
-
+    filterSearch,
+    goodsLoaded,
+    goodsError,
+    goodsRequested
 }

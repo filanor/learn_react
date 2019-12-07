@@ -1,6 +1,7 @@
 const initialState = {
     catalog: [],
     bestsellers: [],
+    goods: [],
     loading: true,
     error: false,
     formSended: false
@@ -16,7 +17,7 @@ const catalogReducer = (state = initialState, action) => {
                 error: false
             }
         case 'BEST_LOADED':
-            return {
+            return { 
                 ...state,
                 bestsellers: action.payload,
                 loading: false,
@@ -29,6 +30,27 @@ const catalogReducer = (state = initialState, action) => {
                 loading: false,
                 error: true
             }
+        case 'GOODS_LOADED':
+            return { 
+                ...state,
+                goods: action.payload,
+                loading: false,
+                error: false
+            }
+        // case 'GOODS_REQUESTED':
+        //     return { 
+        //         ...state,
+        //         goods: state.goods,
+        //         loading: false,
+        //         error: false
+        //     }
+        // case 'GOODS_ERROR':
+        //     return {
+        //         ...state, 
+        //         goods: state.goods,
+        //         loading: false,
+        //         error: true
+        //     }
         case 'CATALOG_REQUESTED':
             return {
                 ...state,
