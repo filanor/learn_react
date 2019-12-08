@@ -21,7 +21,6 @@ export default class CoffeeService {
 
     async getGoods() {
         const goods = await this.getResource('/goods');
-        console.log(`получили с сервера ${goods}`);
         return goods.map(this._transformCatalog);
     }
 

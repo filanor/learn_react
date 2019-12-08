@@ -30,7 +30,6 @@ const phoneNumberMask = [
 
 
 const ContactPage = ({formSended, formToggle}) => {
-    console.log(formSended)
     if(formSended){
         return (
             <div className = "col-lg-4 offset-lg-4 contact-page">

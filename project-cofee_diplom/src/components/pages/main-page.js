@@ -40,7 +40,6 @@ class MainPage extends Component {
                 </Link>
             )
         });
-        // const content = <View bestItems = {bestItems}/>;
         return (
             <View bestItems = {bestItems} />
         );

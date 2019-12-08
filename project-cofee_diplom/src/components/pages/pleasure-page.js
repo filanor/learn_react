@@ -13,7 +13,6 @@ const PleasurePage = (props) => {
 
     const {catalog} = props;
 
-    console.log(catalog);
     const items = catalog.map(item => {
         return(
             <div className='shop__item' key = {item.id}>

@@ -8,8 +8,6 @@ import CoffeeService from '../../services/coffee-service';
 class Layout extends Component {
 
     componentDidMount() {
-        const {url} = this.props.children.props.match;
-        console.log(url);
         const coffeeService = new CoffeeService()
         const {catalogRequested, catalogLoaded, catalogError, goodsLoaded} = this.props
             catalogRequested();
@@ -24,12 +22,9 @@ class Layout extends Component {
     }
 
     render() {
-        const {error, children, catalog, goods} = this.props;
+        const {error, children} = this.props;
 
         const {url} = children.props.match;
-
-        console.log(`каталог: ${catalog}`);
-        console.log(`товары: ${goods}`);
         
         let headerContent = {};
         if(url === '/pleasure/'){
